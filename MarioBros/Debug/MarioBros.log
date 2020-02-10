@@ -1,2 +1,7 @@
+<<<<<<< Updated upstream
 ﻿  Character.cpp
   MarioBros.vcxproj -> D:\Games Engine\mario\MarioBros\Debug\MarioBros.exe
+=======
+﻿  GameScreen.cpp
+  MarioBros.vcxproj -> C:\Users\d012751j\Documents\GitHub\Mario\Debug\MarioBros.exe
+>>>>>>> Stashed changes
