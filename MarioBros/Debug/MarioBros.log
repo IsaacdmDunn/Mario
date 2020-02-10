@@ -1,2 +1,4 @@
-﻿  Character.cpp
-  MarioBros.vcxproj -> D:\Games Engine\mario\MarioBros\Debug\MarioBros.exe
+﻿  Texture2D.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Texture2D.cpp(77): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Texture2D.cpp(77): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  MarioBros.vcxproj -> C:\Users\d012751j\Documents\GitHub\Mario\Debug\MarioBros.exe

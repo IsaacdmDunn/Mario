@@ -7,11 +7,17 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mJumping = false;
 	mCanJump = true;
 
+	mCollisionRadius = 15.0f;
+
 	//mFacingDirection = FACING_RIGHT;
 	mRenderer = renderer;
-	SetPosition(startPosition);
+	mPosition = startPosition;
+	//SetPosition(startPosition);
 	mTexture = new Texture2D(mRenderer);
-	mTexture->LoadTextureFromFile(imagePath);
+	if (!mTexture->LoadTextureFromFile(imagePath))
+	{
+		std::cout << "failed to load" << std::endl;
+	}
 }
 
 Character::~Character()
@@ -67,14 +73,21 @@ void Character::Update(float deltaTime, SDL_Event e)
 		{
 		case SDLK_d:
 			mMovingRight = true;
+			mMovingLeft = false;
 			break;
 		case SDLK_a:
 			mMovingLeft = true;
+			mMovingRight = false;
 			break;
 		default:
 			break;
 		}
 	}
+}
+
+float Character::GetCollisionRadius()
+{
+	return mCollisionRadius;
 }
 
 void Character::SetPosition(Vector2D newPosition)
@@ -133,4 +146,8 @@ void Character::Jump()
 		mJumping = true;
 		mCanJump = false;
 	}
+}
+
+Rect2D Character::GetCollisionBox() {
+	return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
 }

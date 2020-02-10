@@ -15,7 +15,7 @@ using namespace::std;
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
 //Texture2D* gTexture = NULL;
-SDL_Texture* LoadTextureFromFile(const std::string& path);
+//SDL_Texture* LoadTextureFromFile(const std::string& path);
 GameScreenManager* gameScreenManager;
 Uint32 gOldTime;
 
@@ -23,7 +23,7 @@ bool InitSDL();
 void CloseSDL();
 bool Update();
 void Render();
-void FreeTexture();
+//void FreeTexture();
 
 int flip = 10;
 

@@ -2,10 +2,14 @@
 
 #include <SDL.h>
 #include "Commons.h"
+#include "GameScreen.h"
+#include "CharacterLuigi.h"
+#include "CharacterMario.h"
 
 class GameScreen;
 
-class GameScreenManager {
+class GameScreenManager 
+{
 public:
 	GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen);
 	~GameScreenManager();
