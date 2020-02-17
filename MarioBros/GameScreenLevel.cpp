@@ -4,8 +4,9 @@
 
 GameScreenLevel::GameScreenLevel(SDL_Renderer* renderer) : GameScreen(renderer)
 {
-	mRenderer = renderer;
 	SetUpLevel();
+	mLevelMap = NULL;
+
 }
 
 GameScreenLevel::~GameScreenLevel()
@@ -15,11 +16,14 @@ GameScreenLevel::~GameScreenLevel()
 
 	delete Luigi;
 	Luigi = NULL;
+	delete Mario;
+	Mario = NULL;
 }
 
 void GameScreenLevel::Update(float deltaTime, SDL_Event e)
 {
 	Luigi->Update(deltaTime, e);
+	Mario->Update(deltaTime, e);
 }
 
 void GameScreenLevel::Render()
@@ -28,16 +32,47 @@ void GameScreenLevel::Render()
 	mBackgroundTexture->Render(Vector2D(), SDL_FLIP_NONE);
 
 	Luigi->Render();
+	Mario->Render();
 }
 
 bool GameScreenLevel::SetUpLevel()
 {
-	Luigi = new Character(mRenderer, "Images/Luigi.png", Vector2D(64, 330));
+
+	SetLevelMap();
+
+	Luigi = new CharacterLuigi(mRenderer, "Images/Luigi.png", Vector2D(64, 0), mLevelMap);
+	Mario = new CharacterMario(mRenderer, "Images/Mario.png", Vector2D(128, 0), mLevelMap);
 
 	mBackgroundTexture = new Texture2D(mRenderer);
-	if (!mBackgroundTexture->LoadTextureFromFile("Images/test.bmp"))
+	if (!mBackgroundTexture->LoadTextureFromFile("Images/backgroundMB.png"))
 	{
 		std::cout << "Failed to load background texture!";
 		return false;
 	}
+}
+
+void GameScreenLevel::SetLevelMap()
+{
+	int map[MAP_HEIGHT][MAP_WIDTH] = {  { 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0 },
+										{ 1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0 },
+										{ 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1 } };
+
+	//Clear up old map
+	if (mLevelMap != NULL)
+	{
+		delete mLevelMap;
+	}
+
+	//set the new map
+	mLevelMap = new LevelMap(map);
 }

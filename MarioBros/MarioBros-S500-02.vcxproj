@@ -125,14 +125,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Character.cpp" />
-    <ClCompile Include="CharacterLuigi.cpp" />
-    <ClCompile Include="CharacterMario.cpp" />
-    <ClCompile Include="Collisions.cpp" />
-    <ClCompile Include="GameScreen.cpp" />
-    <ClCompile Include="GameScreenLevel.cpp" />
-    <ClCompile Include="GameScreenManager.cpp" />
-    <ClCompile Include="LevelMap.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
@@ -143,18 +135,8 @@
     <Library Include="SDL\SDL2_mixer.lib" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Character.h" />
-    <ClInclude Include="CharacterLuigi.h" />
-    <ClInclude Include="CharacterMario.h" />
-    <ClInclude Include="Collisions.h" />
     <ClInclude Include="Commons.h" />
     <ClInclude Include="Constants.h" />
-    <ClInclude Include="GameScreen.h" />
-    <ClInclude Include="GameScreenLevel.h" />
-    <ClInclude Include="GameScreenManager.h" />
-    <ClInclude Include="LevelMap.h" />
-    <ClInclude Include="Source.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

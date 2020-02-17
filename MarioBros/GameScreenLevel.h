@@ -4,6 +4,9 @@
 #include "GameScreen.h"
 #include "Commons.h"
 #include "Character.h"
+#include "CharacterLuigi.h"
+#include "CharacterMario.h"
+#include "LevelMap.h"
 
 class Texture2D;
 
@@ -17,7 +20,12 @@ public:
 	void Update(float deltaTime, SDL_Event e);
 private:
 	Texture2D* mBackgroundTexture;
-	Character* Luigi;
+	CharacterLuigi* Luigi;
+	CharacterMario* Mario;
 
 	bool SetUpLevel();
+
+	void SetLevelMap();
+
+	LevelMap* mLevelMap;
 };

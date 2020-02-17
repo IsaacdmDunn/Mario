@@ -1,7 +1,35 @@
-<<<<<<< Updated upstream
-﻿  Character.cpp
-  MarioBros.vcxproj -> D:\Games Engine\mario\MarioBros\Debug\MarioBros.exe
-=======
-﻿  GameScreen.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Character.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(69): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(71): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(72): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(84): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(85): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  CharacterLuigi.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  CharacterMario.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Collisions.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(41): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(42): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(43): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(44): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(46): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(47): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(48): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Collisions.cpp(49): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  GameScreen.cpp
+  GameScreenLevel.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  GameScreenManager.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(25): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  LevelMap.cpp
+  Source.cpp
+  Texture2D.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Texture2D.cpp(67): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Texture2D.cpp(67): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  Generating Code...
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\GameScreenLevel.cpp(52): warning C4715: 'GameScreenLevel::SetUpLevel': not all control paths return a value
   MarioBros.vcxproj -> C:\Users\d012751j\Documents\GitHub\Mario\Debug\MarioBros.exe
->>>>>>> Stashed changes

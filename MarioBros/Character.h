@@ -3,13 +3,15 @@
 #include <iostream>
 #include "Commons.h"
 #include <SDL.h>
+#include "LevelMap.h"
+#include "Texture2D.h"
 
 class Texture2D;
 
 class Character
 {
 public:
-	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition);
+	Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map);
 	~Character();
 
 	virtual void Render();
@@ -17,6 +19,11 @@ public:
 
 	void SetPosition(Vector2D newPosition);
 	Vector2D GetPosition();
+	float GetCollisionRadius();
+
+	Rect2D GetCollisionBox() {
+		return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
+	}
 
 protected:
 	SDL_Renderer* mRenderer;
@@ -26,15 +33,20 @@ protected:
 	virtual void MoveLeft(float deltaTime);
 	virtual void MoveRight(float deltaTime);
 
-private:
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
 	bool mJumping;
 	bool mCanJump;
 	float mJumpForce;
+	int currentYPos;
 
 	void AddGravity(float deltaTime);
 	void Jump();
+
+	float mCollisionRadius;
+
+private:
+	LevelMap* mCurrentLevelMap;
 };
 
