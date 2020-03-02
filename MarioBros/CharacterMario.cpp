@@ -2,6 +2,7 @@
 #include "Texture2D.h"
 #include "Constants.h"
 
+//constructer
 CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map) : Character(renderer, imagePath, startPosition, map)
 {
 	//mJumping = false;
@@ -14,12 +15,16 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Ve
 	//mTexture->LoadTextureFromFile(imagePath);
 }
 
+//destructer
 CharacterMario::~CharacterMario()
 {
 }
 
+//update
 void CharacterMario::Update(float deltaTime, SDL_Event e)
 {
+	//mXVelocity = 0;
+
 	//player controls
 	switch (e.type) {
 	case SDL_KEYUP:
@@ -54,6 +59,7 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
+	//update
 	Character::Update(deltaTime, e);
 }
 

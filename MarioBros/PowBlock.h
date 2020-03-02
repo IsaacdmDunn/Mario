@@ -12,14 +12,15 @@ public:
 	~PowBlock();
 
 	virtual void Render();
-	Rect2D GetCollisionBox() { return mRect; }
+	SDL_Rect* GetCollisionBox();
 	void TakeAHit();
 	bool IsAvailable() { return mNumberOfHitsLeft > 0; }
 private:
 	SDL_Renderer* mRenderer;
-	Vector2D mPosition;
+	Vector2D* mPosition;
 	Texture2D* mTexture;
-	Rect2D mRect;
+	SDL_Rect* mRect;
+	SDL_Rect* mDestRect;
 	LevelMap* mLevelMap;
 	bool powBlockAvailable = true;
 	float mSingleSpriteWidth;

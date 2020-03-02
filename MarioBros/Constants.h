@@ -12,6 +12,7 @@
 
 //player movement definitions
 #define PLAYER_SPEED			55.0f
+#define PLAYER_VELOCITY_CAP		150.0f
 #define JUMP_FORCE_DECREMENT	300.0f
 #define JUMP_FORCE_INITIAL		375.0f
 #define GRAVITY					96.0f
@@ -21,4 +22,4 @@
 
 //koopa definitions
 #define INJURED_TIME				2.5f
-#define JUMP_FORCE_INITIAL_SMALL	250f
+#define JUMP_FORCE_INITIAL_SMALL	250.0f

@@ -36,22 +36,14 @@ bool Collisions::Circle(Character* character1, Character* character2)
 	return distance < combinedDistance;
 }
 
-bool Collisions::Box(Rect2D rect1, Rect2D rect2)
+bool Collisions::Box(SDL_Rect* rect1, SDL_Rect* rect2)
 {
-	int left1 = rect1.x;
-	int right1 = rect1.x + rect1.width;
-	int top1 = rect1.y;
-	int bottom1 = rect1.y + rect1.height;
+	
 
-	int left2 = rect2.x;
-	int right2 = rect2.x + rect2.width;
-	int top2 = rect2.y;
-	int bottom2 = rect2.y + rect2.height;
-
-	if (rect1.x + (rect1.width/2) > rect2.x &&
-		rect1.x + (rect1.width/2) < rect2.x + rect2.width &&
-		rect1.y + (rect1.height / 2) > rect2.y &&
-		rect1.y + (rect1.height / 2) < rect2.y + rect2.height)
+	if (rect1->x + (rect1->w/2) > rect2->x &&
+		rect1->x + (rect1->w/2) < rect2->x + rect2->w &&
+		rect1->y + (rect1->h/ 2) > rect2->y &&
+		rect1->y + (rect1->h/ 2) < rect2->y + rect2->h)
 	{
 		return true;
 	}

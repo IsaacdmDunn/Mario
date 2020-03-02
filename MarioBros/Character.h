@@ -21,8 +21,10 @@ public:
 	Vector2D GetPosition();
 	float GetCollisionRadius();
 
-	Rect2D GetCollisionBox() {
-		return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
+	SDL_Rect* GetCollisionBox() {
+		SDL_Rect collisionBox = SDL_Rect();
+		collisionBox = { (int)mPosition.x, (int)mPosition.y, mTexture->GetWidth(), mTexture->GetHeight() };
+		return& collisionBox;
 	}
 
 	//bool IsJumping() { return mJumping; };
@@ -35,8 +37,8 @@ protected:
 	Vector2D mPosition;
 	Texture2D* mTexture;
 
-	virtual void MoveLeft(float deltaTime);
-	virtual void MoveRight(float deltaTime);
+	//virtual void MoveLeft(float deltaTime);
+	//virtual void MoveRight(float deltaTime);
 
 	FACING mFacingDirection;
 	bool mMovingLeft;

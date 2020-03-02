@@ -3,6 +3,7 @@
 #include "Constants.h"
 #include "Collisions.h"
 
+//constructor
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map)
 {
 	mJumping = false;
@@ -19,6 +20,7 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mTexture->LoadTextureFromFile(imagePath);
 }
 
+//destructor
 Character::~Character()
 {
 	mRenderer = NULL;
@@ -26,6 +28,7 @@ Character::~Character()
 
 void Character::Render()
 {
+	//render character to face a direction
 	if (mFacingDirection == FACING_RIGHT)
 	{
 		mTexture->Render(mPosition, SDL_FLIP_HORIZONTAL, 180.0f);
@@ -37,33 +40,32 @@ void Character::Render()
 	
 }
 
+//update characters
 void Character::Update(float deltaTime, SDL_Event e)
 {
-	
+	////if character is jumping
+	//if (mJumping)
+	//{
+	//	//adjust the position
+	//	mPosition.y -= mJumpForce * deltaTime;
 
-	//Deal with Jumping first
-	if (mJumping)
-	{
-		//adjust the position
-		mPosition.y -= mJumpForce * deltaTime;
-
-		//reduce jump force
-		mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
-
-		
-	}
-	else 
-	{
-		currentYPos = mPosition.y;
-	}
-	int centralXPosition = mPosition.x / TILE_WIDTH;
+	//	//reduce jump force
+	//	mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
+	//}
+	//reset y-position 
+	//else 
+	//{
+	//	//currentYPos = mPosition.y;
+	//}
+	/*int centralXPosition = mPosition.x / TILE_WIDTH;
 	int footPosition = (mPosition.y + mTexture->GetHeight()) / TILE_HEIGHT;
-	int topPosition = (mPosition.y) / TILE_HEIGHT;
+	int topPosition = (mPosition.y) / TILE_HEIGHT;*/
 	
+	//sets previous position of character
 	float newXPos = GetPosition().x;
 	float newYPos = GetPosition().y;
 
-
+	//if character is jumping
 	if (mJumping) {
 		mCanJump = false;
 
@@ -78,11 +80,22 @@ void Character::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
+	//updates x-position using velocity of character
 	if (mXVelocity != 0.0f) {
 		newXPos += mXVelocity * deltaTime;
 	}
 
+	//limits character velocity
+	if (mXVelocity > PLAYER_VELOCITY_CAP)
+	{
+		mXVelocity = PLAYER_VELOCITY_CAP;
+	}
+	else if (mXVelocity < -PLAYER_VELOCITY_CAP)
+	{
+		mXVelocity = -PLAYER_VELOCITY_CAP;
+	}
 
+	//finds tiles around player
 	int leftTile = newXPos / TILE_WIDTH;
 	int rightTile = (newXPos + mTexture->GetWidth()) / TILE_WIDTH;
 	int topTile = newYPos / TILE_HEIGHT;
@@ -103,6 +116,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	if ((mCurrentLevelMap->GetTileAt(bottomTile, rightTile) != 0 || mCurrentLevelMap->GetTileAt(bottomTile, leftTile) != 0)) {
 		mCanJump = true;
 	}
+	//update y-position using gravity
 	else {
 		newYPos += GRAVITY * deltaTime;
 	}
@@ -128,47 +142,34 @@ void Character::Update(float deltaTime, SDL_Event e)
 		mJumpForce = 0.0f;
 	}
 
-
 	SetPosition(Vector2D(newXPos, newYPos));
 
+	//checks if player is moving
 	if (mMovingLeft)
 	{
 		mXVelocity -= 0.1f;
-		//MoveLeft(deltaTime);
 	}
 	else if (mMovingRight)
 	{
 		mXVelocity +=0.1f;
-		//MoveRight(deltaTime);
 	}
 
 	
 }
 
+//set character's new position
 void Character::SetPosition(Vector2D newPosition)
 {
 	mPosition = newPosition;
 }
 
+//get character's position
 Vector2D Character::GetPosition()
 {
 	return mPosition;
 }
 
-void Character::MoveLeft(float deltaTime)
-{
-	mPosition.x -= PLAYER_SPEED * deltaTime;
-
-	mFacingDirection = FACING_LEFT;
-}
-
-void Character::MoveRight(float deltaTime)
-{
-	mPosition.x += PLAYER_SPEED * deltaTime;
-
-	mFacingDirection = FACING_RIGHT;
-}
-
+//updates y-position using gravity
 void Character::AddGravity(float deltaTime)
 {
 	
@@ -176,6 +177,7 @@ void Character::AddGravity(float deltaTime)
 	
 }
 
+//sets jumping force when player jumps
 void Character::Jump()
 {
 	if (!mJumping)
@@ -187,11 +189,13 @@ void Character::Jump()
 	}
 }
 
+//gets borders for character collision
 float Character::GetCollisionRadius()
 {
 	return mCollisionRadius;
 }
 
+//cancels jump
 void Character::CancelJump()
 {
 	mJumpForce = 0;

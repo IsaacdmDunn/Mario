@@ -1,5 +1,6 @@
 #include "CharacterKoopa.h"
 
+//constructor
 CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, FACING startFacing, float movementSpeed) : Character(renderer, imagePath, startPosition, map)
 {
 	mFacingDirection = startFacing;
@@ -12,18 +13,22 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	mSingleSpriteWidth = mTexture->GetWidth() / 2;
 }
 
+//destructor
 CharacterKoopa::~CharacterKoopa()
 {
 }
 
+//update koopa
 void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 {
 }
 
+//render koopa
 void CharacterKoopa::Render()
 {
 }
 
+//koopa takes damage
 void CharacterKoopa::TakeDamage()
 {
 	mInjured = true;
@@ -31,6 +36,7 @@ void CharacterKoopa::TakeDamage()
 	Jump();
 }
 
+//koopa jump
 void CharacterKoopa::Jump()
 {
 	mJumpForce = JUMP_FORCE_INITIAL_SMALL;
@@ -38,6 +44,7 @@ void CharacterKoopa::Jump()
 	mCanJump = false;
 }
 
+//flip koopa image
 void CharacterKoopa::FlipRightWayUp()
 {
 }

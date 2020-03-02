@@ -1,0 +1,24 @@
+﻿  Character.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(5): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  CharacterKoopa.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(5): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  CharacterLuigi.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(5): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  CharacterMario.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(5): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Collisions.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(5): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameScreen.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\GameScreen.h(3): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameScreenLevel.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\GameScreenLevel.h(3): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  GameScreenManager.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\GameScreenManager.h(3): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  LevelMap.cpp
+  PowBlock.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\PowBlock.h(3): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Source.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Source.cpp(1): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Texture2D.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Texture2D.h(4): fatal error C1083: Cannot open include file: 'SDL.h': No such file or directory
+  Generating Code...
