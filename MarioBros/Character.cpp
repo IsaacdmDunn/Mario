@@ -8,8 +8,6 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	mJumping = false;
 	mCanJump = true;
 
-	
-
 	mCollisionRadius = 15.0f;
 	mCurrentLevelMap = map;
 
@@ -41,6 +39,8 @@ void Character::Render()
 
 void Character::Update(float deltaTime, SDL_Event e)
 {
+	
+
 	//Deal with Jumping first
 	if (mJumping)
 	{
@@ -51,18 +51,6 @@ void Character::Update(float deltaTime, SDL_Event e)
 		mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
 
 		
-		////check jump force rediced to 0
-		//if (mPosition.y > 330.0f)
-		//{
-		//	mPosition.y = 330.0f;
-
-		//	//collided with ground allowing player to jump
-		//	mCanJump = true;
-		//}
-		if (mJumpForce <= 0.0f)
-		{
-			mJumping = false;
-		}
 	}
 	else 
 	{
@@ -70,65 +58,91 @@ void Character::Update(float deltaTime, SDL_Event e)
 	}
 	int centralXPosition = mPosition.x / TILE_WIDTH;
 	int footPosition = (mPosition.y + mTexture->GetHeight()) / TILE_HEIGHT;
-	std::cout << footPosition << std::endl;
-	/* (int)(mPosition.x+(mTexture->GetWidth() * 0.5f)) / TILE_WIDTH;*/
-		/*(int)(mPosition.y+(mTexture->GetHeight() * 0.5f)) / TILE_HEIGHT;*/
-	//check if player is currently in the air
-	if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 0)
-	{
-		std::cout << mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) << std::endl;
-		AddGravity(deltaTime);
+	int topPosition = (mPosition.y) / TILE_HEIGHT;
+	
+	float newXPos = GetPosition().x;
+	float newYPos = GetPosition().y;
+
+
+	if (mJumping) {
+		mCanJump = false;
+
+		//adjusts position
+		newYPos -= mJumpForce * deltaTime;
+
+		//reduces jump force
+		mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
+
+		if (mJumpForce <= 0.0f) {
+			mJumping = false;
+		}
 	}
-	else if (mCurrentLevelMap->GetTileAt(footPosition, centralXPosition) == 1)
-	{
-		currentYPos = mPosition.y;
-		mPosition.y = currentYPos;
-		//Collided with ground allowing player to jump again
+
+	if (mXVelocity != 0.0f) {
+		newXPos += mXVelocity * deltaTime;
+	}
+
+
+	int leftTile = newXPos / TILE_WIDTH;
+	int rightTile = (newXPos + mTexture->GetWidth()) / TILE_WIDTH;
+	int topTile = newYPos / TILE_HEIGHT;
+	int bottomTile = (newYPos + mTexture->GetHeight()) / TILE_HEIGHT;
+
+
+	//left collision
+	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, leftTile) != 0) {
+		newXPos = GetPosition().x;
+	}
+
+	//right collision
+	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, rightTile) != 0) {
+		newXPos = GetPosition().x;
+	}
+
+	//foot collision
+	if ((mCurrentLevelMap->GetTileAt(bottomTile, rightTile) != 0 || mCurrentLevelMap->GetTileAt(bottomTile, leftTile) != 0)) {
 		mCanJump = true;
-		mJumping = false;
 	}
-	
-	
+	else {
+		newYPos += GRAVITY * deltaTime;
+	}
+
+
+
+	//head collision
+	if (mCurrentLevelMap->GetTileAt(topTile, rightTile) == 1) {
+		mJumpForce = 0.0f;
+	}
+	if (mCurrentLevelMap->GetTileAt(topTile, leftTile) == 1) {
+		mJumpForce = 0.0f;
+	}
+
+	//restrict Mario's X Position
+	if (newXPos < 0.0f || newXPos + mTexture->GetWidth() > SCREEN_WIDTH) {
+		newXPos = GetPosition().x;
+	}
+
+	//restrict Mario's Y Position
+	if (newYPos < 0.0f || newYPos + mTexture->GetHeight() > SCREEN_HEIGHT) {
+		newYPos = GetPosition().y + 1;
+		mJumpForce = 0.0f;
+	}
+
+
+	SetPosition(Vector2D(newXPos, newYPos));
 
 	if (mMovingLeft)
 	{
-		MoveLeft(deltaTime);
+		mXVelocity -= 0.1f;
+		//MoveLeft(deltaTime);
 	}
 	else if (mMovingRight)
 	{
-		MoveRight(deltaTime);
+		mXVelocity +=0.1f;
+		//MoveRight(deltaTime);
 	}
 
-	//player controls
-	switch (e.type) {
-	case SDL_KEYUP:
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_w:
-			Jump();
-		case SDLK_d:
-			mMovingRight = false;
-		case SDLK_a:
-			mMovingLeft = false;
-		
-		}
-		
-	default:
-		break;
-
-	case SDL_KEYDOWN:
-		switch (e.key.keysym.sym)
-		{
-		case SDLK_d:
-			mMovingRight = true;
-			break;
-		case SDLK_a:
-			mMovingLeft = true;
-			break;
-		default:
-			break;
-		}
-	}
+	
 }
 
 void Character::SetPosition(Vector2D newPosition)
@@ -176,5 +190,10 @@ void Character::Jump()
 float Character::GetCollisionRadius()
 {
 	return mCollisionRadius;
+}
+
+void Character::CancelJump()
+{
+	mJumpForce = 0;
 }
 

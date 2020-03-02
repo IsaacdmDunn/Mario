@@ -20,16 +20,16 @@ CharacterLuigi::~CharacterLuigi()
 
 void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 {
-	Character::AddGravity(deltaTime);
+	//Character::AddGravity(deltaTime);
 
-	if (mMovingLeft)
-	{
-		MoveLeft(deltaTime);
-	}
-	else if (mMovingRight)
-	{
-		MoveRight(deltaTime);
-	}
+	//if (mMovingLeft)
+	//{
+	//	MoveLeft(deltaTime);
+	//}
+	//else if (mMovingRight)
+	//{
+	//	MoveRight(deltaTime);
+	//}
 
 	//player controls
 	switch (e.type) {
@@ -40,8 +40,10 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 			Jump();
 		case SDLK_d:
 			mMovingRight = false;
+			mXVelocity = 0;
 		case SDLK_a:
 			mMovingLeft = false;
+			mXVelocity = 0;
 
 		}
 
@@ -66,6 +68,7 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 
 	Character::Update(deltaTime, e);
 }
+
 
 
 

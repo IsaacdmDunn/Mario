@@ -20,17 +20,6 @@ CharacterMario::~CharacterMario()
 
 void CharacterMario::Update(float deltaTime, SDL_Event e)
 {
-	Character::AddGravity(deltaTime);
-
-	if (mMovingLeft)
-	{
-		MoveLeft(deltaTime);
-	}
-	else if (mMovingRight)
-	{
-		MoveRight(deltaTime);
-	}
-
 	//player controls
 	switch (e.type) {
 	case SDL_KEYUP:
@@ -40,9 +29,10 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			Jump();
 		case SDLK_d:
 			mMovingRight = false;
+			mXVelocity = 0;
 		case SDLK_a:
 			mMovingLeft = false;
-
+			mXVelocity = 0;
 		}
 
 	default:
@@ -63,8 +53,11 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			break;
 		}
 	}
+
 	Character::Update(deltaTime, e);
 }
+
+
 
 
 

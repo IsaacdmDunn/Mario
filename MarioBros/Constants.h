@@ -11,7 +11,9 @@
 #define TILE_WIDTH		32
 
 //player movement definitions
-#define PLAYER_SPEED			25.0f
+#define PLAYER_SPEED			55.0f
 #define JUMP_FORCE_DECREMENT	300.0f
-#define JUMP_FORCE_INITIAL		450.0f
+#define JUMP_FORCE_INITIAL		375.0f
 #define GRAVITY					96.0f
+
+#define SCREENSHAKE_DURATION    0.25f

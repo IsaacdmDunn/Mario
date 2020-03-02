@@ -25,6 +25,11 @@ public:
 		return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
 	}
 
+	//bool IsJumping() { return mJumping; };
+	void CancelJump();
+
+	bool mJumping;
+
 protected:
 	SDL_Renderer* mRenderer;
 	Vector2D mPosition;
@@ -36,10 +41,11 @@ protected:
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
-	bool mJumping;
 	bool mCanJump;
 	float mJumpForce;
 	int currentYPos;
+
+	float mXVelocity;
 
 	void AddGravity(float deltaTime);
 	void Jump();

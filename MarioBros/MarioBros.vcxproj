@@ -133,6 +133,7 @@
     <ClCompile Include="GameScreenLevel.cpp" />
     <ClCompile Include="GameScreenManager.cpp" />
     <ClCompile Include="LevelMap.cpp" />
+    <ClCompile Include="PowBlock.cpp" />
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Texture2D.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="GameScreenLevel.h" />
     <ClInclude Include="GameScreenManager.h" />
     <ClInclude Include="LevelMap.h" />
+    <ClInclude Include="PowBlock.h" />
     <ClInclude Include="Source.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="Texture2D.h" />
