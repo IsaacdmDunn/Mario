@@ -16,4 +16,9 @@
 #define JUMP_FORCE_INITIAL		375.0f
 #define GRAVITY					96.0f
 
+//duration of POW block screen wobble
 #define SCREENSHAKE_DURATION    0.25f
+
+//koopa definitions
+#define INJURED_TIME				2.5f
+#define JUMP_FORCE_INITIAL_SMALL	250f
