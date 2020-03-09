@@ -1,3 +1,11 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Source.cpp
-  MarioBros.vcxproj -> C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\Debug\MarioBros.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  CharacterKoopa.cpp
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(19): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(20): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(65): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(68): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(71): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(71): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(73): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(73): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  MarioBros.vcxproj -> C:\Users\d012751j\Documents\GitHub\Mario\Debug\MarioBros.exe

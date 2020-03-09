@@ -23,6 +23,7 @@ GameScreenLevel :: ~GameScreenLevel()
 	delete mPowBlock;
 	mPowBlock = NULL;
 	mLevelMap = NULL;
+	
 	mEnemies.clear();
 }
 
@@ -33,16 +34,17 @@ void GameScreenLevel::Render()
 
 	Mario->Render();
 	Luigi->Render();
+	//std::cout << mEnemies[0]->GetPosition().y << std::endl;
 
 	for (unsigned int i = 0; i < mEnemies.size(); i++)
 	{
 		mEnemies[i]->Render();
 	}
 	
-	for (unsigned int i = 0; i < mCoins.size(); i++)
+	/*for (unsigned int i = 0; i < mCoins.size(); i++)
 	{
 		mCoins[i]->Render();
-	}
+	}*/
 }
 
 void GameScreenLevel::Update(float deltaTime, SDL_Event e)
@@ -68,7 +70,7 @@ void GameScreenLevel::Update(float deltaTime, SDL_Event e)
 	if (mEnemyRespawnTime < 0.0f)
 	{
 		mEnemyRespawnTime = KOOPA_RESPAWN_RATE;
-		CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
+		CreateKoopa(Vector2D(325, 320), FACING_LEFT, KOOPA_SPEED);
 	}
 	
 }
@@ -132,25 +134,29 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 			//update enemies
 			mEnemies[i]->Update(deltaTime, e);
 
-			//check if enemies collides with player
+			//check if enemy is off screen
 			if ((mEnemies[i]->GetPosition().y > 300.0f || mEnemies[i]->GetPosition().y <= 64.0f) &&
 				(mEnemies[i]->GetPosition().x > 64.0f  || mEnemies[i]->GetPosition().x > SCREEN_WIDTH - 96.0f))
 			{
-				if (mEnemies[i]->GetAlive() == true)
-				{
-					//player dies
-				}
-				else 
-				{
-					//koopa dies
-					mEnemies[i]->SetAlive(false);
-				}
+				//koopa dies
+				mEnemies[i]->SetAlive(false);
 			}
 			else
 			{
+				//check if enemies collides with player
 				if (Collisions::Instance()->Circle(mEnemies[i], Mario))
 				{
+					std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
 					//Mario.SetState(CHARACTER_PLAYER_DEATH);
+					if (mEnemies[i]->GetAlive() == true)
+					{
+						//player dies
+					}
+					else
+					{
+						//koopa dies
+						mEnemies[i]->SetAlive(false);
+					}
 				}
 			}
 
@@ -161,12 +167,12 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 			}*/
 		}
 
-		//remove dead enemies
-		if (enemyIndexToDelete != -1)
-		{
-			CreateCoins(mEnemies[enemyIndexToDelete]->GetPosition());
-			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
-		}
+		////remove dead enemies
+		//if (enemyIndexToDelete != -1)
+		//{
+		//	CreateCoins(mEnemies[enemyIndexToDelete]->GetPosition());
+		//	mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
+		//}
 	}
 }
 
@@ -211,11 +217,13 @@ void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 
 void GameScreenLevel::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
+	mCharacterKoopa = new CharacterKoopa(mRenderer, "Images/Koopa.png" , position, mLevelMap, direction, speed);
 	mEnemies.push_back(mCharacterKoopa);
 }
 
 void GameScreenLevel::CreateCoins(Vector2D position)
 {
+	mCharacterCoin = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, NULL, 0);
 	mCoins.push_back(mCharacterCoin);
 }
 
@@ -232,7 +240,7 @@ bool GameScreenLevel::SetUpLevel()
 
 	mScoreSystem = new ScoreSystem();
 
-	//CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
+	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 	//CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
 
 	//CreateCoins(Vector2D(150, 32));

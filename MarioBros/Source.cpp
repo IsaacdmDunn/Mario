@@ -59,15 +59,7 @@ int main(int argc, char* args[])
 
 bool InitSDL()
 {
-	//initialise the mixer
-	if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
-	{
-		cout << "Mixer could not initialise. Error: " << Mix_GetError();
-	}
-
-	LoadMusic("Audio/Mario.mp3");
-
-	if (SDL_Init(SDL_INIT_VIDEO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO || SDL_INIT_AUDIO) < 0)
 	{
 		cout << "SDL did not initialise. Error: " << SDL_GetError();
 
@@ -75,6 +67,14 @@ bool InitSDL()
 	}
 	else
 	{
+		//initialise the mixer
+		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
+		{
+			cout << "Mixer could not initialise. Error: " << Mix_GetError();
+		}
+
+		LoadMusic("Audio/Mario.mp3");
+
 		gWindow = SDL_CreateWindow("Mario Bros",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
