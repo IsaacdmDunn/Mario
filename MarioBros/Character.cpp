@@ -11,6 +11,7 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 
 	mCollisionRadius = 15.0f;
 	mCurrentLevelMap = map;
+	mFacingDirection = FACING_RIGHT;
 
 	//mFacingDirection = FACING_RIGHT;
 	mRenderer = renderer;
@@ -43,23 +44,7 @@ void Character::Render()
 //update characters
 void Character::Update(float deltaTime, SDL_Event e)
 {
-	////if character is jumping
-	//if (mJumping)
-	//{
-	//	//adjust the position
-	//	mPosition.y -= mJumpForce * deltaTime;
 
-	//	//reduce jump force
-	//	mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
-	//}
-	//reset y-position 
-	//else 
-	//{
-	//	//currentYPos = mPosition.y;
-	//}
-	/*int centralXPosition = mPosition.x / TILE_WIDTH;
-	int footPosition = (mPosition.y + mTexture->GetHeight()) / TILE_HEIGHT;
-	int topPosition = (mPosition.y) / TILE_HEIGHT;*/
 	
 	//sets previous position of character
 	float newXPos = GetPosition().x;
@@ -103,17 +88,17 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 
 	//left collision
-	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, leftTile) != 0) {
+	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, leftTile) == 1) {
 		newXPos = GetPosition().x;
 	}
 
 	//right collision
-	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, rightTile) != 0) {
+	if (mCurrentLevelMap->GetTileAt(bottomTile - 1, rightTile) == 1) {
 		newXPos = GetPosition().x;
 	}
 
 	//foot collision
-	if ((mCurrentLevelMap->GetTileAt(bottomTile, rightTile) != 0 || mCurrentLevelMap->GetTileAt(bottomTile, leftTile) != 0)) {
+	if ((mCurrentLevelMap->GetTileAt(bottomTile, rightTile) == 1 || mCurrentLevelMap->GetTileAt(bottomTile, leftTile) == 1)) {
 		mCanJump = true;
 	}
 	//update y-position using gravity
@@ -175,6 +160,12 @@ void Character::AddGravity(float deltaTime)
 	
 	mPosition.y += GRAVITY * deltaTime;
 	
+}
+
+Rect2D Character::GetCollisionBox()
+{
+	return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
+
 }
 
 //sets jumping force when player jumps

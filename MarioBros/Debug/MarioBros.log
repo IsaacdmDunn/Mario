@@ -1,18 +1,3 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(411,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Character.cpp
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(99): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(100): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(101): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.cpp(102): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-  CharacterKoopa.cpp
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(11): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\CharacterKoopa.cpp(12): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  CharacterLuigi.cpp
-  CharacterMario.cpp
-  Collisions.cpp
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   GameScreenLevel.cpp
-  GameScreenManager.cpp
-  Generating Code...
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\Character.h(27): warning C4172: returning address of local variable or temporary: collisionBox
-C:\Users\d012751j\Documents\GitHub\Mario\MarioBros\GameScreenLevel.cpp(105): warning C4715: 'GameScreenLevel::SetUpLevel': not all control paths return a value
-  MarioBros.vcxproj -> C:\Users\d012751j\Documents\GitHub\Mario\Debug\MarioBros.exe
+  MarioBros.vcxproj -> C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\Debug\MarioBros.exe

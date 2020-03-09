@@ -1,28 +1,25 @@
 #pragma once
-
-#include "commons.h"
+#ifndef _COLLISIONS
+#define _COLLISIONS
 
 #include "SDL.h"
+#include "Commons.h"
 
 class Character;
 
 class Collisions
 {
 public:
-	
-	~Collisions();
 
+	~Collisions();
 	static Collisions* Instance();
 
+	bool Box(Rect2D rect1, Rect2D rect2);
 	bool Circle(Character* character1, Character* character2);
-	bool Box(SDL_Rect* rect1, SDL_Rect* rect2);
-
-	//void SetPosition(Vector2D newPosition);
-	//double GetCollisionRadius();
-
 private:
-	Collisions();
 
+	Collisions();
 	static Collisions* mInstance;
 };
 
+#endif

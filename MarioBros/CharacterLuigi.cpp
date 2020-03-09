@@ -36,15 +36,16 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 	case SDL_KEYUP:
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_w:
+		case SDLK_UP:
 			Jump();
-		case SDLK_d:
+		case SDLK_RIGHT:
 			mMovingRight = false;
 			mXVelocity = 0;
-		case SDLK_a:
+			break;
+		case SDLK_LEFT:
 			mMovingLeft = false;
 			mXVelocity = 0;
-
+			break;
 		}
 
 	default:
@@ -53,13 +54,15 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym)
 		{
-		case SDLK_d:
+		case SDLK_RIGHT:
 			mMovingRight = true;
 			mMovingLeft = false;
+			mFacingDirection = FACING_RIGHT;
 			break;
-		case SDLK_a:
+		case SDLK_LEFT:
 			mMovingLeft = true;
 			mMovingRight = false;
+			mFacingDirection = FACING_LEFT;
 			break;
 		default:
 			break;

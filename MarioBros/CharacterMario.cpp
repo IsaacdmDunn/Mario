@@ -49,10 +49,12 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 		case SDLK_d:
 			mMovingRight = true;
 			mMovingLeft = false;
+			mFacingDirection = FACING_RIGHT;
 			break;
 		case SDLK_a:
 			mMovingLeft = true;
 			mMovingRight = false;
+			mFacingDirection = FACING_LEFT;
 			break;
 		default:
 			break;

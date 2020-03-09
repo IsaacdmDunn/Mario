@@ -1,7 +1,10 @@
 #pragma once
 
 #include "Character.h"
+#include <SDL.h>
+#include "Collisions.h"
 
+class Texture2D;
 class CharacterKoopa : public Character
 {
 public:
@@ -13,10 +16,12 @@ public:
 
 	void TakeDamage();
 	void Jump();
+	void SetAlive(bool mIsAlive);
+	bool GetAlive() { return isAlive; }
 
 private:
 	void FlipRightWayUp();
-
+	bool isAlive;
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 	float mMovementSpeed;

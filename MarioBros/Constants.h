@@ -23,3 +23,8 @@
 //koopa definitions
 #define INJURED_TIME				2.5f
 #define JUMP_FORCE_INITIAL_SMALL	250.0f
+#define KOOPA_SPEED					0.25f
+#define KOOPA_RESPAWN_RATE			5.0f
+
+//coin definitions
+#define ANIMATION_DELAY				0.25f

@@ -21,11 +21,7 @@ public:
 	Vector2D GetPosition();
 	float GetCollisionRadius();
 
-	SDL_Rect* GetCollisionBox() {
-		SDL_Rect collisionBox = SDL_Rect();
-		collisionBox = { (int)mPosition.x, (int)mPosition.y, mTexture->GetWidth(), mTexture->GetHeight() };
-		return& collisionBox;
-	}
+	Rect2D GetCollisionBox();
 
 	//bool IsJumping() { return mJumping; };
 	void CancelJump();
