@@ -9,7 +9,6 @@ class Game
 public:
 	Game();
 	~Game();
-	//SDL_Texture* gTexture;
 
 private:
 
