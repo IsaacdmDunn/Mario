@@ -41,10 +41,10 @@ void GameScreenLevel::Render()
 		mEnemies[i]->Render();
 	}
 	
-	/*for (unsigned int i = 0; i < mCoins.size(); i++)
+	for (unsigned int i = 0; i < mCoins.size(); i++)
 	{
 		mCoins[i]->Render();
-	}*/
+	}
 }
 
 void GameScreenLevel::Update(float deltaTime, SDL_Event e)
@@ -53,6 +53,7 @@ void GameScreenLevel::Update(float deltaTime, SDL_Event e)
 	Luigi->Update(deltaTime, e);
 	UpdatePOWBlock();
 	UpdateEnemies(deltaTime, e);
+	UpdateCoins(deltaTime, e);
 
 	if (mScreenShake)
 	{
@@ -128,6 +129,7 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 					mEnemies[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemies[i]->GetCollisionBox().width * 0.55f))
 				{
 					//mEnemies[i].SetAlive(false);
+					std::cout << "collided" << std::endl;
 				}
 			}
 
@@ -146,7 +148,7 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 				//check if enemies collides with player
 				if (Collisions::Instance()->Circle(mEnemies[i], Mario))
 				{
-					std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
+					//std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
 					//Mario.SetState(CHARACTER_PLAYER_DEATH);
 					if (mEnemies[i]->GetAlive() == true)
 					{
@@ -208,10 +210,10 @@ void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 		}
 
 		//remove collected coins
-		if (coinIndexToDelete != -1)
+		/*if (coinIndexToDelete != -1)
 		{
 			mCoins.erase(mCoins.begin() + coinIndexToDelete);
-		}
+		}*/
 	}
 }
 
@@ -223,7 +225,7 @@ void GameScreenLevel::CreateKoopa(Vector2D position, FACING direction, float spe
 
 void GameScreenLevel::CreateCoins(Vector2D position)
 {
-	mCharacterCoin = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, NULL, 0);
+	mCharacterCoin = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, 0);
 	mCoins.push_back(mCharacterCoin);
 }
 
@@ -243,7 +245,7 @@ bool GameScreenLevel::SetUpLevel()
 	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 	//CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
 
-	//CreateCoins(Vector2D(150, 32));
+	CreateCoins(Vector2D(325, 32));
 
 	//Set up POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);

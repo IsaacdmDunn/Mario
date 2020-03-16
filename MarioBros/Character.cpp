@@ -82,7 +82,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 	//finds tiles around player
 	int leftTile = newXPos / TILE_WIDTH;
-	int rightTile = (newXPos + mTexture->GetWidth()) / TILE_WIDTH;
+	int rightTile = (newXPos + (mTexture->GetWidth() / mNumberOfFrames)) / TILE_WIDTH;
 	int topTile = newYPos / TILE_HEIGHT;
 	int bottomTile = (newYPos + mTexture->GetHeight()) / TILE_HEIGHT;
 
@@ -117,7 +117,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 	}
 
 	//restrict Mario's X Position
-	if (newXPos < 0.0f || newXPos + mTexture->GetWidth() > SCREEN_WIDTH) {
+	if (newXPos < 0.0f || newXPos + (mTexture->GetWidth() / mNumberOfFrames) > SCREEN_WIDTH) {
 		newXPos = GetPosition().x;
 	}
 
@@ -164,7 +164,7 @@ void Character::AddGravity(float deltaTime)
 
 Rect2D Character::GetCollisionBox()
 {
-	return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
+	return Rect2D(mPosition.x, mPosition.y, (mTexture->GetWidth() / mNumberOfFrames), mTexture->GetHeight());
 
 }
 

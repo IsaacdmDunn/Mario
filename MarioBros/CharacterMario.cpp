@@ -5,14 +5,18 @@
 //constructer
 CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map) : Character(renderer, imagePath, startPosition, map)
 {
-	//mJumping = false;
-	//mCanJump = true;
+	mPosition = startPosition;
 
-	////mFacingDirection = FACING_RIGHT;
-	//mRenderer = renderer;
-	//SetPosition(startPosition);
-	//mTexture = new Texture2D(mRenderer);
-	//mTexture->LoadTextureFromFile(imagePath);
+	imagePath = "Images/MarioWalk.png";
+	mTexture = new Texture2D(renderer);
+	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
+	{
+		std::cout << "Failed to load texture" << imagePath << std::endl;
+		return;
+	}
+	mNumberOfFrames = 6;
+	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
+	mSingleSpriteHeight = mTexture->GetHeight();
 }
 
 //destructer
@@ -23,7 +27,22 @@ CharacterMario::~CharacterMario()
 //update
 void CharacterMario::Update(float deltaTime, SDL_Event e)
 {
-	//mXVelocity = 0;
+	if (mMovingLeft == true || mMovingRight == true)
+	{
+		mFrameDelay -= deltaTime;
+		if (mFrameDelay <= 0.0f)
+		{
+			mFrameDelay = ANIMATION_DELAY;
+
+			mCurrentFrame++;
+
+			if (mCurrentFrame > 5)
+			{
+				mCurrentFrame = 0;
+			}
+		}
+	}
+	
 
 	//player controls
 	switch (e.type) {
@@ -35,9 +54,11 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 		case SDLK_d:
 			mMovingRight = false;
 			mXVelocity = 0;
+			mCurrentFrame = 0;
 		case SDLK_a:
 			mMovingLeft = false;
 			mXVelocity = 0;
+			mCurrentFrame = 0;
 		}
 
 	default:
@@ -63,7 +84,29 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 
 	//update
 	Character::Update(deltaTime, e);
+
+	
 }
+
+void CharacterMario::Render()
+{
+	int left = mSingleSpriteWidth * mCurrentFrame;
+
+	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
+
+	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
+
+	//render character to face a direction
+	if (mFacingDirection == FACING_RIGHT)
+	{
+		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL);
+	}
+	else if (mFacingDirection == FACING_LEFT)
+	{
+		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
+	}
+}
+
 
 
 

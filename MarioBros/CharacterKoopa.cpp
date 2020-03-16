@@ -9,14 +9,14 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 
 	mInjured = false;
 
-	imagePath = "Images/Koopa.png";
+	imagePath = "Images/KoopaWalk.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
 	{
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
-	mSingleSpriteWidth = mTexture->GetWidth() / 2;
+	mSingleSpriteWidth = mTexture->GetWidth() / 8;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
 
@@ -34,6 +34,18 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 	//mInjured = true;
 	if (!mInjured)
 	{
+		mFrameDelay -= deltaTime;
+		if (mFrameDelay <= 0.0f)
+		{
+			mFrameDelay = ANIMATION_DELAY;
+
+			mCurrentFrame++;
+
+			if (mCurrentFrame > 7)
+			{
+				mCurrentFrame = 0;
+			}
+		}
 		if (mFacingDirection == FACING_LEFT)
 		{
 			mMovingLeft = true;
@@ -47,6 +59,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 	}
 	else
 	{
+		mCurrentFrame = 0;
 		mMovingLeft = false;
 		mMovingRight = false;
 
@@ -62,23 +75,24 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 //render koopa
 void CharacterKoopa::Render()
 {
-	int left = 0.0f;
 	if (mInjured)
 	{
-		left = mSingleSpriteWidth * 2;
+		int left = 0.0f;
 	}
+	int left = mSingleSpriteWidth * mCurrentFrame;
 
-	SDL_Rect portionOfSpriteSheet = {left, 0, mSingleSpriteWidth, mSingleSpriteHeight};
+	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
 
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
+	//render character to face a direction
 	if (mFacingDirection == FACING_RIGHT)
 	{
-		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
-	}
-	else
-	{
 		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_HORIZONTAL);
+	}
+	else if (mFacingDirection == FACING_LEFT)
+	{
+		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
 	}
 }
 

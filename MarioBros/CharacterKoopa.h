@@ -27,4 +27,7 @@ private:
 	float mMovementSpeed;
 	bool mInjured;
 	float mInjuredTime;
+
+	int mCurrentFrame;
+	float mFrameDelay;
 };

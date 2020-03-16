@@ -49,6 +49,8 @@ protected:
 	void Jump();
 
 	float mCollisionRadius;
+	int mNumberOfFrames;
+	
 
 private:
 	LevelMap* mCurrentLevelMap;

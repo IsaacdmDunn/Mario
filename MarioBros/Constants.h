@@ -27,4 +27,4 @@
 #define KOOPA_RESPAWN_RATE			5.0f
 
 //coin definitions
-#define ANIMATION_DELAY				0.25f
+#define ANIMATION_DELAY				0.15f

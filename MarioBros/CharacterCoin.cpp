@@ -6,7 +6,7 @@ CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vect
 	mMovementSpeed = movementSpeed;
 	mPosition = startPosition;
 
-	//std::string imagePath = "Images/Coin.png";
+	imagePath = "Images/Coin.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
 	{

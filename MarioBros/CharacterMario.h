@@ -11,4 +11,13 @@ public:
 	~CharacterMario();
 
 	void Update(float deltaTime, SDL_Event e) override;
+	void Render() override;
+
+private:
+	float mSingleSpriteWidth;
+	float mSingleSpriteHeight;
+
+	int mCurrentFrame;
+	float mFrameDelay;
+
 };
