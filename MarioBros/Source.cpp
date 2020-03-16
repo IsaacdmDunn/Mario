@@ -71,6 +71,7 @@ bool InitSDL()
 		if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 		{
 			cout << "Mixer could not initialise. Error: " << Mix_GetError();
+			return false;
 		}
 
 		LoadMusic("Audio/Mario.mp3");
@@ -169,7 +170,7 @@ bool Update()
 	//loops music
 	if (Mix_PlayingMusic() == 0)
 	{
-		//Mix_PlayingMusic(gMusic, -1);
+		Mix_PlayMusic(gMusic, -1);
 	}
 
 	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);

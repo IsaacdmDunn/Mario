@@ -19,6 +19,7 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	//SetPosition(startPosition);
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadTextureFromFile(imagePath);
+	mCollisionRadius = 16;
 }
 
 //destructor
@@ -44,12 +45,10 @@ void Character::Render()
 //update characters
 void Character::Update(float deltaTime, SDL_Event e)
 {
-
-	
 	//sets previous position of character
 	float newXPos = GetPosition().x;
 	float newYPos = GetPosition().y;
-
+	//mCanJump = true;
 	//if character is jumping
 	if (mJumping) {
 		mCanJump = false;
@@ -99,7 +98,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 	//foot collision
 	if ((mCurrentLevelMap->GetTileAt(bottomTile, rightTile) == 1 || mCurrentLevelMap->GetTileAt(bottomTile, leftTile) == 1)) {
-		mCanJump = true;
+		//mCanJump = true;
 	}
 	//update y-position using gravity
 	else {
@@ -129,7 +128,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 	SetPosition(Vector2D(newXPos, newYPos));
 
-	//checks if player is moving
+	//checks if player is moving then lowers velocity
 	if (mMovingLeft)
 	{
 		mXVelocity -= 0.1f;

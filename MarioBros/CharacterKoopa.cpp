@@ -18,6 +18,7 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	}
 	mSingleSpriteWidth = mTexture->GetWidth() / 8;
 	mSingleSpriteHeight = mTexture->GetHeight();
+	mCollisionRadius = 16;
 }
 
 //destructor

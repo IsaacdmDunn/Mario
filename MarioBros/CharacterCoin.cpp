@@ -51,3 +51,8 @@ void CharacterCoin::Render()
 	mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
 }
 
+Rect2D CharacterCoin::GetCollisionBox()
+{
+	return Rect2D(mPosition.x, mPosition.y, mSingleSpriteWidth, mTexture->GetHeight());
+}
+

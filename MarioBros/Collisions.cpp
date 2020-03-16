@@ -21,13 +21,15 @@ bool Collisions::Box(Rect2D rect1, Rect2D rect2) {
 
 bool Collisions::Circle(Character* character1, Character* character2)
 {
-	/*Vector2D vec = Vector2D((character1->GetPosition().x - character2->GetPosition().x),
+	Vector2D vec = Vector2D((character1->GetPosition().x - character2->GetPosition().x),
 		(character1->GetPosition().y - character2->GetPosition().y));
 
 	double distance = sqrt((vec.x * vec.x) + (vec.y * vec.y));
-	double combinedDistance = (character1->GetCollisionRadius() + character2->GetCollisionRadius());
+	double character1Radius = character1->GetCollisionRadius();
+	double character2Radius = character2->GetCollisionRadius();
+	double combinedDistance = character1Radius + character2Radius;
 
-	return distance < combinedDistance;*/
+	return distance < combinedDistance;
 	return false;
 }
 

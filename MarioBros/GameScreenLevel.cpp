@@ -5,6 +5,9 @@
 
 
 GameScreenLevel::GameScreenLevel(SDL_Renderer* renderer) : GameScreen(renderer) {
+	
+	coinIndexToDelete = -1;
+	enemyIndexToDelete = -1;
 	SetUpLevel();
 }
 
@@ -119,6 +122,13 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 {
 	if (!mEnemies.empty())
 	{
+		//if the enemy is no longer alive then delete
+		if (enemyIndexToDelete != -1)
+		{
+			mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
+			enemyIndexToDelete = -1;
+		}
+
 		for (unsigned int i = 0; i < mEnemies.size(); i++)
 		{
 			//check if enemy of on the bottom row of the level map
@@ -128,8 +138,6 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 				if (mEnemies[i]->GetPosition().x < (float)(mEnemies[i]->GetCollisionBox().width * 0.5f) ||
 					mEnemies[i]->GetPosition().x > SCREEN_WIDTH - (float)(mEnemies[i]->GetCollisionBox().width * 0.55f))
 				{
-					//mEnemies[i].SetAlive(false);
-					std::cout << "collided" << std::endl;
 				}
 			}
 
@@ -148,7 +156,7 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 				//check if enemies collides with player
 				if (Collisions::Instance()->Circle(mEnemies[i], Mario))
 				{
-					//std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
+					std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
 					//Mario.SetState(CHARACTER_PLAYER_DEATH);
 					if (mEnemies[i]->GetAlive() == true)
 					{
@@ -162,59 +170,43 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 				}
 			}
 
-			//if the enemy is no longer alive then delete
-			/*if (!mEnemies[i].GetAlive())
-			{
-				enemyIndexToDelete = i;
-			}*/
+			
 		}
-
-		////remove dead enemies
-		//if (enemyIndexToDelete != -1)
-		//{
-		//	CreateCoins(mEnemies[enemyIndexToDelete]->GetPosition());
-		//	mEnemies.erase(mEnemies.begin() + enemyIndexToDelete);
-		//}
 	}
 }
 
 void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 {
+	
 	if (!mCoins.empty())
 	{
+		if (coinIndexToDelete != -1)
+		{
+			mCoins.erase(mCoins.begin() + coinIndexToDelete);
+			coinIndexToDelete = -1;
+		}
 		for (unsigned int i = 0; i < mCoins.size(); i++)
 		{
-			//check if coins of on the bottom row of the level map
-			if (mCoins[i]->GetPosition().y > 300.0f)
+			if (Collisions::Instance()->Box(mCoins[i]->GetCollisionBox(), Mario->GetCollisionBox()) /*&& mPowBlock->IsAvailable*/)
 			{
-				//check if coins is offscreen
-				if (mCoins[i]->GetPosition().x < (float)(mCoins[i]->GetCollisionBox().width * 0.5f) ||
-					mCoins[i]->GetPosition().x > SCREEN_WIDTH - (float)(mCoins[i]->GetCollisionBox().width * 0.55f))
-				{
-					//mCoins[i].SetAlive(false);
 					mScoreSystem->mScore += 100;
-					std::cout << "Score: " << mScoreSystem->mScore << std::endl;
-				}
+					coinIndexToDelete = i;
 			}
-
+			
 			//update coins
 			mCoins[i]->Update(deltaTime, e);
 
-			//check if coin collides with player
+			//check if coin if coin is out of bounds and delete it
 			if ((mCoins[i]->GetPosition().y > 300.0f || mCoins[i]->GetPosition().y <= 64.0f) &&
 				(mCoins[i]->GetPosition().x > 64.0f || mCoins[i]->GetPosition().x > SCREEN_WIDTH - 96.0f))
 			{
-				//coins collected
 				coinIndexToDelete = i;
 			}
 		}
 
-		//remove collected coins
-		/*if (coinIndexToDelete != -1)
-		{
-			mCoins.erase(mCoins.begin() + coinIndexToDelete);
-		}*/
+			
 	}
+	
 }
 
 void GameScreenLevel::CreateKoopa(Vector2D position, FACING direction, float speed)
@@ -243,9 +235,11 @@ bool GameScreenLevel::SetUpLevel()
 	mScoreSystem = new ScoreSystem();
 
 	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
-	//CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
+	CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
 
 	CreateCoins(Vector2D(325, 32));
+	CreateCoins(Vector2D(292, 32));
+	CreateCoins(Vector2D(260, 32));
 
 	//Set up POW block
 	mPowBlock = new PowBlock(mRenderer, mLevelMap);
@@ -264,8 +258,8 @@ bool GameScreenLevel::SetUpLevel()
 void GameScreenLevel::SetLevelMap()
 {
 	int map[MAP_HEIGHT][MAP_WIDTH] = {
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
 		{1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
@@ -274,8 +268,8 @@ void GameScreenLevel::SetLevelMap()
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0},
 		{1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
+		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
 		{1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1}
 	};
 

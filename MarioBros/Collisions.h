@@ -4,6 +4,7 @@
 
 #include "SDL.h"
 #include "Commons.h"
+#include "Character.h"
 
 class Character;
 

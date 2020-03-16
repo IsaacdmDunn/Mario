@@ -17,6 +17,7 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Ve
 	mNumberOfFrames = 6;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
+	mCollisionRadius = 16;
 }
 
 //destructer
