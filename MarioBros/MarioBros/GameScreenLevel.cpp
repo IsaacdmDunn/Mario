@@ -11,8 +11,10 @@ GameScreenLevel::GameScreenLevel(SDL_Renderer* renderer) : GameScreen(renderer) 
 	enemyIndexToDelete = -1;
 	SetUpLevel();
 
-	mMusicSystem->LoadMusic("Audio/Mario.mp3");
-	mMusicSystem->PlayMusic();
+	//Mix_Music* mMusic = NULL;
+	//Mix_Chunk* mSound = NULL;
+	//mMusicSystem->LoadMusic("Audio/Mario.mp3");
+	//mMusicSystem->PlayMusic();
 }
 
 GameScreenLevel :: ~GameScreenLevel()
