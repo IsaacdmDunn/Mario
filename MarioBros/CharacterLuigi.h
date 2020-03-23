@@ -12,11 +12,13 @@ public:
 
 	void Update(float deltaTime, SDL_Event e) override;
 	void Render() override;
+	void LuigiDeath();
 
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 
+	bool mLuigiDead = false;
 	int mCurrentFrame;
 	float mFrameDelay;
 };

@@ -13,7 +13,7 @@ CharacterLuigi::CharacterLuigi(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
-	mNumberOfFrames = 7;
+	mNumberOfFrames = 8;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
@@ -90,7 +90,26 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
-	Character::Update(deltaTime, e);
+	//update if mario is not dead else change to dead animation and drop off the screen
+	if (mLuigiDead == false)
+	{
+		Character::Update(deltaTime, e);
+	}
+	else
+	{
+		mPosition.y += deltaTime * GRAVITY * 3;
+		mCurrentFrame = 7;
+	}
+
+	//checks if player is moving then add velocity
+	if (mMovingLeft)
+	{
+		mXVelocity -= 0.1f;
+	}
+	else if (mMovingRight)
+	{
+		mXVelocity += 0.1f;
+	}
 }
 
 void CharacterLuigi::Render()
@@ -109,6 +128,19 @@ void CharacterLuigi::Render()
 	else if (mFacingDirection == FACING_LEFT)
 	{
 		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
+	}
+}
+
+void CharacterLuigi::LuigiDeath()
+{
+	if (!mJumping)
+	{
+		mMusicSystem->PauseMusic();
+		Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/MarioDeath.wav");
+		mMusicSystem->PlaySoundEffect(mSound);
+		mJumpForce = JUMP_FORCE_INITIAL;
+		mJumping = true;
+		mLuigiDead = true;
 	}
 }
 

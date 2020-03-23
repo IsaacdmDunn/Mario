@@ -180,6 +180,22 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 					enemyIndexToDelete = i;
 				}
 			}
+			else if (Collisions::Instance()->Circle(mEnemies[i], Luigi))
+			{
+				//Mario.SetState(CHARACTER_PLAYER_DEATH);
+				if (mEnemies[i]->GetAlive() == true)
+				{
+					//player dies
+					Luigi->LuigiDeath();
+				}
+				else
+				{
+					//koopa dies
+					Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Kick.wav");
+					mMusicSystem->PlaySoundEffect(mSound);
+					enemyIndexToDelete = i;
+				}
+			}
 			
 
 			
@@ -206,6 +222,13 @@ void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 					coinIndexToDelete = i;
 					Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Coin.wav");
 					mMusicSystem->PlaySoundEffect(mSound);
+			}
+			else if (Collisions::Instance()->Box(mCoins[i]->GetCollisionBox(), Luigi->GetCollisionBox()) /*&& mPowBlock->IsAvailable*/)
+			{
+				mScoreSystem->mScore += 100;
+				coinIndexToDelete = i;
+				Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Coin.wav");
+				mMusicSystem->PlaySoundEffect(mSound);
 			}
 			
 			//update coins

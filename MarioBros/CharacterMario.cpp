@@ -14,7 +14,7 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
-	mNumberOfFrames = 7;
+	mNumberOfFrames = 8;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 	mCollisionRadius = 16;
@@ -90,15 +90,16 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			break;
 		}
 	}
-	//sets previous position of character
-	float newXPos = GetPosition().x;
-	float newYPos = GetPosition().y;
-	//update
-	Character::Update(deltaTime, e);
-	if (mMarioDead == true)
+	
+	//update if mario is not dead else change to dead animation and drop off the screen
+	if (mMarioDead == false)
 	{
-
-		Character::CheckCollisions(newXPos, newYPos, deltaTime);
+		Character::Update(deltaTime, e);
+	}
+	else
+	{
+		mPosition.y += deltaTime * GRAVITY * 3;
+		mCurrentFrame = 7;
 	}
 
 	//checks if player is moving then add velocity

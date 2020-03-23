@@ -20,6 +20,5 @@ private:
 	bool mMarioDead = false;
 	int mCurrentFrame;
 	float mFrameDelay;
-	int previousFrame = 0;
 
 };
