@@ -21,9 +21,9 @@
 #define SCREENSHAKE_DURATION    0.25f
 
 //koopa definitions
-#define INJURED_TIME				12.5f
+#define INJURED_TIME				10.0f
 #define JUMP_FORCE_INITIAL_SMALL	250.0f
-#define KOOPA_SPEED					0.25f
+#define KOOPA_SPEED					0.017f
 #define KOOPA_RESPAWN_RATE			5.0f
 
 //coin definitions

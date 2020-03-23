@@ -8,6 +8,7 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	mPosition = startPosition;
 
 	mInjured = false;
+	isAlive = true;
 
 	imagePath = "Images/KoopaWalk.png";
 	mTexture = new Texture2D(renderer);
@@ -16,7 +17,8 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
-	mSingleSpriteWidth = mTexture->GetWidth() / 8;
+	mNumberOfFrames = 8;
+	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 	mCollisionRadius = 16;
 }
@@ -51,11 +53,13 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 		{
 			mMovingLeft = true;
 			mMovingRight = false;
+			mPosition.x += KOOPA_SPEED;
 		}
 		else if(mFacingDirection == FACING_RIGHT)
 		{
 			mMovingLeft = false;
 			mMovingRight = true;
+			mPosition.x -= KOOPA_SPEED;
 		}
 	}
 	else
@@ -71,6 +75,19 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 			FlipRightWayUp();
 		}
 	}
+	Character::Update(deltaTime, e);
+
+	if (mPosition.x < 0)
+	{
+		mFacingDirection = FACING_LEFT;
+		mPosition.x = 0;
+	}
+	else if (mPosition.x > SCREEN_WIDTH - mSingleSpriteWidth)
+	{
+		mFacingDirection = FACING_RIGHT;
+		mPosition.x = SCREEN_WIDTH - mSingleSpriteWidth;
+	}
+
 }
 
 //render koopa
@@ -101,7 +118,8 @@ void CharacterKoopa::Render()
 void CharacterKoopa::TakeDamage()
 {
 	mInjured = true;
-	mInjuredTime = 2.5f;
+	mInjuredTime = INJURED_TIME;
+	isAlive = false;
 	Jump();
 }
 
@@ -121,6 +139,10 @@ void CharacterKoopa::SetAlive(bool mIsInjured)
 //flip koopa image
 void CharacterKoopa::FlipRightWayUp()
 {
-	
-
+	mCurrentFrame = 0;
+	isAlive = true;
+	mInjured = false;
+	mMovingLeft = true;
+	mMovingRight = true;
+	//Jump();
 }

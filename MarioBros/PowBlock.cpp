@@ -44,6 +44,10 @@ void PowBlock::Render()
 
 
 	}
+	else
+	{
+		mPosition.x = 1000;
+	}
 }
 
 Rect2D PowBlock::GetCollisionBox()

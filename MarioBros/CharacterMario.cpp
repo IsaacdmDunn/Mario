@@ -90,11 +90,26 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			break;
 		}
 	}
-
+	//sets previous position of character
+	float newXPos = GetPosition().x;
+	float newYPos = GetPosition().y;
 	//update
 	Character::Update(deltaTime, e);
+	if (mMarioDead == true)
+	{
 
-	
+		Character::CheckCollisions(newXPos, newYPos, deltaTime);
+	}
+
+	//checks if player is moving then add velocity
+	if (mMovingLeft)
+	{
+		mXVelocity -= 0.1f;
+	}
+	else if (mMovingRight)
+	{
+		mXVelocity += 0.1f;
+	}
 }
 
 void CharacterMario::Render()
@@ -113,6 +128,19 @@ void CharacterMario::Render()
 	else if (mFacingDirection == FACING_LEFT)
 	{
 		mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
+	}
+}
+
+void CharacterMario::MarioDeath()
+{
+	if (!mJumping)
+	{
+		mMusicSystem->PauseMusic();
+		Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/MarioDeath.wav");
+		mMusicSystem->PlaySoundEffect(mSound);
+		mJumpForce = JUMP_FORCE_INITIAL;
+		mJumping = true;
+		mMarioDead = true;
 	}
 }
 

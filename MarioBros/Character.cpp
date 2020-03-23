@@ -17,6 +17,8 @@ Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D sta
 	//SetPosition(startPosition);
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadTextureFromFile(imagePath);
+
+	mMusicSystem = new SoundManager();
 }
 
 //destructor
@@ -80,15 +82,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 
 	CheckCollisions(newXPos, newYPos, deltaTime);
 
-	//checks if player is moving then add velocity
-	if (mMovingLeft)
-	{
-		mXVelocity -= 0.1f;
-	}
-	else if (mMovingRight)
-	{
-		mXVelocity += 0.1f;
-	}
+	
 
 
 }
@@ -97,7 +91,7 @@ void Character::CheckCollisions(float newXPos, float newYPos, float deltaTime)
 {
 	//finds tiles around player
 	int leftTile = newXPos / TILE_WIDTH;
-	int rightTile = (newXPos + mTexture->GetWidth()) / TILE_WIDTH;
+	int rightTile = (newXPos + (mTexture->GetWidth() / mNumberOfFrames)) / TILE_WIDTH;
 	int topTile = newYPos / TILE_HEIGHT;
 	int bottomTile = (newYPos + mTexture->GetHeight()) / TILE_HEIGHT;
 
@@ -130,30 +124,18 @@ void Character::CheckCollisions(float newXPos, float newYPos, float deltaTime)
 		mJumpForce = 0.0f;
 	}
 
-	//restrict Mario's X Position
-	if (newXPos < 0.0f || newXPos + mTexture->GetWidth() > SCREEN_WIDTH) {
+	//restricts X Position
+	if (newXPos < 0.0f || newXPos + (mTexture->GetWidth()/mNumberOfFrames) > SCREEN_WIDTH) {
 		newXPos = GetPosition().x;
 	}
 
-	//restrict Mario's Y Position
+	//restricts Y Position
 	if (newYPos < 0.0f || newYPos + mTexture->GetHeight() > SCREEN_HEIGHT) {
 		newYPos = GetPosition().y + 1;
 		mJumpForce = 0.0f;
 	}
 
 	SetPosition(Vector2D(newXPos, newYPos));
-
-	//checks if player is moving
-	if (mMovingLeft)
-	{
-		mXVelocity -= 0.1f;
-	}
-	else if (mMovingRight)
-	{
-		mXVelocity += 0.1f;
-	}
-
-
 }
 
 //set character's new position
@@ -178,7 +160,7 @@ void Character::AddGravity(float deltaTime)
 
 Rect2D Character::GetCollisionBox()
 {
-	return Rect2D(mPosition.x, mPosition.y, mTexture->GetWidth(), mTexture->GetHeight());
+	return Rect2D(mPosition.x, mPosition.y, (mTexture->GetWidth()/mNumberOfFrames), mTexture->GetHeight());
 
 }
 

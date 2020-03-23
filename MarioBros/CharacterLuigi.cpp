@@ -13,7 +13,7 @@ CharacterLuigi::CharacterLuigi(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
-	mNumberOfFrames = 6;
+	mNumberOfFrames = 7;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
@@ -38,6 +38,16 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 				mCurrentFrame = 0;
 			}
 		}
+	}
+
+	//if player jumps use jumping animation else if player is no longer jumping reset player position
+	if (mJumping == true && mOnFloor == true)
+	{
+		mCurrentFrame = 6;
+	}
+	else if (mCurrentFrame > 5 && mOnFloor == true)
+	{
+		mCurrentFrame = 0;
 	}
 
 	//player controls

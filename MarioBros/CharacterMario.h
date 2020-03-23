@@ -12,11 +12,12 @@ public:
 
 	void Update(float deltaTime, SDL_Event e) override;
 	void Render() override;
+	void MarioDeath();
 
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
-
+	bool mMarioDead = false;
 	int mCurrentFrame;
 	float mFrameDelay;
 	int previousFrame = 0;

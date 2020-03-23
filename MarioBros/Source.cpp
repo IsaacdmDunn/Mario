@@ -150,18 +150,12 @@ bool Update()
 		return true;
 		break;
 
-	case SDL_KEYUP:
-		switch (e.key.keysym.sym)
-		{
-		case SDL_MOUSEBUTTONDOWN:
-			cout << "mouse click" << endl;
-		}
-
-		gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
-		gOldTime = newTime;
-
-		return false;
+		
 	}
+	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
+	gOldTime = newTime;
+
+	return false;
 }
 
 void Render()

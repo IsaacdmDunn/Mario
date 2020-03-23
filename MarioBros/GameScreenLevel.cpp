@@ -11,6 +11,7 @@ GameScreenLevel::GameScreenLevel(SDL_Renderer* renderer) : GameScreen(renderer) 
 	enemyIndexToDelete = -1;
 	SetUpLevel();
 
+	mMusicSystem = new SoundManager();
 	mMusicSystem->LoadMusic("Audio/Mario.mp3");
 	mMusicSystem->PlayMusic();
 }
@@ -42,7 +43,6 @@ void GameScreenLevel::Render()
 
 	Mario->Render();
 	Luigi->Render();
-	//std::cout << mEnemies[0]->GetPosition().y << std::endl;
 
 	for (unsigned int i = 0; i < mEnemies.size(); i++)
 	{
@@ -166,11 +166,11 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 			//check if enemies collides with player
 			if (Collisions::Instance()->Circle(mEnemies[i], Mario))
 			{
-				std::cout << Collisions::Instance()->Circle(mEnemies[i], Mario) << std::endl;
 				//Mario.SetState(CHARACTER_PLAYER_DEATH);
 				if (mEnemies[i]->GetAlive() == true)
 				{
 					//player dies
+					Mario->MarioDeath();
 				}
 				else
 				{

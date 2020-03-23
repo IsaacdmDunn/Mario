@@ -1,3 +1,14 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(459,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (MarioBros-S500-02.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  SoundManager.cpp
-  MarioBros.vcxproj -> C:\Users\Mr Poopybutthole\Downloads\Mario-Music\Debug\MarioBros.exe
+  CharacterMario.cpp
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(18,44): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(19,43): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(117,11): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(119,45): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(119,45): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(119,65): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(119,65): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(121,64): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(121,64): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(121,84): warning C4838: conversion from 'float' to 'int' requires a narrowing conversion
+C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\MarioBros\CharacterMario.cpp(121,84): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+  MarioBros.vcxproj -> C:\Users\Mr Poopybutthole\Documents\GitHub\Mario\Debug\MarioBros.exe

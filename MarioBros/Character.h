@@ -52,6 +52,9 @@ protected:
 	int mNumberOfFrames;
 	bool mOnFloor;
 
+	int mSingleSpriteWidth;
+	int mSingleSpriteHeight;
+
 	Mix_Chunk* mSound;
 
 private:

@@ -3,7 +3,6 @@
 SoundManager::SoundManager()
 {
 
-	Mix_Music* mMusic = NULL;
 }
 
 SoundManager::~SoundManager()
@@ -11,21 +10,23 @@ SoundManager::~SoundManager()
 	//deletes the music from memory
 	Mix_FreeMusic(mMusic);
 	mMusic = NULL;
+	Mix_FreeChunk(mSound);
+	mSound = NULL;
 }
 
 void SoundManager::LoadMusic(std::string filePath)
 {
 	//Loads the music into memory
-	//mMusic = Mix_LoadMUS(filePath.c_str());
-	/*if (!mMusic) {
+	mMusic = Mix_LoadMUS(filePath.c_str());
+	if (!mMusic) {
 		printf("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
-	}*/
+	}
 }
 
 void SoundManager::PlayMusic(int numOfLoops)
 {
 	//Plays the music
-	//Mix_PlayMusic(mMusic, numOfLoops);
+	Mix_PlayMusic(mMusic, numOfLoops);
 }
 
 void SoundManager::StopMusic()
@@ -48,7 +49,6 @@ void SoundManager::ResumeMusic()
 
 Mix_Chunk* SoundManager::LoadSoundEffect(std::string filePath)
 {
-	mSound = nullptr;
 	//Loads the sound
 	mSound = Mix_LoadWAV(filePath.c_str());
 	if (!mSound) { //if mSound is equal to null
