@@ -1,4 +1,4 @@
-#include "GameScreenLevel.h"
+#include "GameScreenLevel2.h"
 #include <iostream>
 #include "Texture2D.h"
 #include "Collisions.h"
@@ -6,18 +6,18 @@
 
 
 
-GameScreenLevel::GameScreenLevel(SDL_Renderer* renderer) : GameScreen(renderer) {
-	
+GameScreenLevel2::GameScreenLevel2(SDL_Renderer* renderer) : GameScreen(renderer) {
+
 	coinIndexToDelete = -1;
 	enemyIndexToDelete = -1;
 	SetUpLevel();
 
 	mMusicSystem = new SoundManager();
-	mMusicSystem->LoadMusic("Audio/Mario.mp3");
+	mMusicSystem->LoadMusic("Audio/MarioUnderworld.mp3");
 	mMusicSystem->PlayMusic();
 }
 
-GameScreenLevel :: ~GameScreenLevel()
+GameScreenLevel2 :: ~GameScreenLevel2()
 {
 	delete mBackgroundTexture;
 	mBackgroundTexture = NULL;
@@ -32,12 +32,12 @@ GameScreenLevel :: ~GameScreenLevel()
 	delete mPowBlock;
 	mPowBlock = NULL;
 	mLevelMap = NULL;
-	
+
 	mEnemies.clear();
 	mCoins.clear();
 }
 
-void GameScreenLevel::Render()
+void GameScreenLevel2::Render()
 {
 	mBackgroundTexture->Render(Vector2D(0.0, mBackgroundYPos), SDL_FLIP_NONE);
 	mPowBlock->Render();
@@ -49,14 +49,14 @@ void GameScreenLevel::Render()
 	{
 		mEnemies[i]->Render();
 	}
-	
+
 	for (unsigned int i = 0; i < mCoins.size(); i++)
 	{
 		mCoins[i]->Render();
 	}
 }
 
-void GameScreenLevel::Update(float deltaTime, SDL_Event e)
+void GameScreenLevel2::Update(float deltaTime, SDL_Event e)
 {
 	Mario->Update(deltaTime, e);
 	Luigi->Update(deltaTime, e);
@@ -82,31 +82,31 @@ void GameScreenLevel::Update(float deltaTime, SDL_Event e)
 		mEnemyRespawnTime = KOOPA_RESPAWN_RATE;
 		CreateKoopa(Vector2D(325, 320), FACING_LEFT, KOOPA_SPEED);
 	}
-	
+
 	//check if enemy of on the bottom row of the level map
 	if (Mario->GetPosition().y > SCREEN_HEIGHT)
 	{
 		if (Mario->mMarioDead == false)
 		{
 			Mario->mMarioDead = true;
-			mMusicSystem->LoadMusic("Audio/Mario.mp3");
+			mMusicSystem->LoadMusic("Audio/MarioUnderworld.mp3");
 			mMusicSystem->PlayMusic();
-			
+
 		}
-		
+
 	}
 	else if (Luigi->GetPosition().y > SCREEN_HEIGHT)
 	{
 		if (Luigi->mLuigiDead == false)
 		{
 			Luigi->mLuigiDead = true;
-			mMusicSystem->LoadMusic("Audio/Mario.mp3");
+			mMusicSystem->LoadMusic("Audio/MarioUnderworld.mp3");
 			mMusicSystem->PlayMusic();
 		}
 	}
 }
 
-void GameScreenLevel::UpdatePOWBlock()
+void GameScreenLevel2::UpdatePOWBlock()
 {
 
 	if (Collisions::Instance()->Box(mPowBlock->GetCollisionBox(), Mario->GetCollisionBox()) /*&& mPowBlock->IsAvailable*/)
@@ -148,14 +148,14 @@ void GameScreenLevel::UpdatePOWBlock()
 
 }
 
-void GameScreenLevel::ShakeScreen()
+void GameScreenLevel2::ShakeScreen()
 {
 	mScreenShake = true;
 	mScreenShakeTime = SCREENSHAKE_DURATION;
 	mWobble = 0.0f;
 }
 
-void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
+void GameScreenLevel2::UpdateEnemies(float deltaTime, SDL_Event e)
 {
 	if (!mEnemies.empty())
 	{
@@ -170,7 +170,7 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 		{
 			//update enemies
 			mEnemies[i]->Update(deltaTime, e);
-			
+
 			//check if enemies collides with player
 			if (Collisions::Instance()->Circle(mEnemies[i], Mario))
 			{
@@ -206,13 +206,13 @@ void GameScreenLevel::UpdateEnemies(float deltaTime, SDL_Event e)
 	}
 	else
 	{
-		mScreenToChange = SCREEN_LEVEL2;
+		mScreenToChange = SCREEN_LEVEL1;
 	}
 }
 
-void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
+void GameScreenLevel2::UpdateCoins(float deltaTime, SDL_Event e)
 {
-	
+
 	if (!mCoins.empty())
 	{
 		//remove collected coins
@@ -237,7 +237,7 @@ void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 				Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Coin.wav");
 				mMusicSystem->PlaySoundEffect(mSound);
 			}
-			
+
 			//update coins
 			mCoins[i]->Update(deltaTime, e);
 
@@ -245,19 +245,19 @@ void GameScreenLevel::UpdateCoins(float deltaTime, SDL_Event e)
 	}
 }
 
-void GameScreenLevel::CreateKoopa(Vector2D position, FACING direction, float speed)
+void GameScreenLevel2::CreateKoopa(Vector2D position, FACING direction, float speed)
 {
-	mCharacterKoopa = new CharacterKoopa(mRenderer, "Images/KoopaWalk.png" , position, mLevelMap, direction, speed);
+	mCharacterKoopa = new CharacterKoopa(mRenderer, "Images/KoopaWalk2.png", position, mLevelMap, direction, speed);
 	mEnemies.push_back(mCharacterKoopa);
 }
 
-void GameScreenLevel::CreateCoins(Vector2D position)
+void GameScreenLevel2::CreateCoins(Vector2D position)
 {
 	mCharacterCoin = new CharacterCoin(mRenderer, "Images/Coin.png", position, mLevelMap, 0);
 	mCoins.push_back(mCharacterCoin);
 }
 
-bool GameScreenLevel::SetUpLevel()
+bool GameScreenLevel2::SetUpLevel()
 {
 	//set screen shake system to default
 	mScreenShake = false;
@@ -272,6 +272,15 @@ bool GameScreenLevel::SetUpLevel()
 
 	CreateKoopa(Vector2D(150, 32), FACING_RIGHT, KOOPA_SPEED);
 	CreateKoopa(Vector2D(325, 32), FACING_LEFT, KOOPA_SPEED);
+	CreateKoopa(Vector2D(150, 128), FACING_RIGHT, KOOPA_SPEED);
+	CreateKoopa(Vector2D(325, 128), FACING_LEFT, KOOPA_SPEED);
+
+	CreateCoins(Vector2D(160, 224));
+	CreateCoins(Vector2D(192, 224));
+	CreateCoins(Vector2D(224, 224));
+	CreateCoins(Vector2D(256, 224));
+	CreateCoins(Vector2D(288, 224));
+	CreateCoins(Vector2D(320, 224));
 
 	CreateCoins(Vector2D(160, 128));
 	CreateCoins(Vector2D(192, 128));
@@ -286,7 +295,7 @@ bool GameScreenLevel::SetUpLevel()
 
 	//Load the background Texture
 	mBackgroundTexture = new Texture2D(mRenderer);
-	if (!mBackgroundTexture->LoadTextureFromFile("Images/BackgroundMB.png"))
+	if (!mBackgroundTexture->LoadTextureFromFile("Images/BackgroundMB2.png"))
 	{
 		std::cout << "Failed to load background texture";
 		return false;
@@ -294,18 +303,18 @@ bool GameScreenLevel::SetUpLevel()
 	return false;
 }
 
-void GameScreenLevel::SetLevelMap()
+void GameScreenLevel2::SetLevelMap()
 {
 	int map[MAP_HEIGHT][MAP_WIDTH] = {
 		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
 		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
 		{1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
-		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{0,0,0,0,1,1,1,1,1,1,1,1,0,0,0,0},
 		{1,1,0,0,0,0,0,0,0,0,0,0,0,0,1,1},
 		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
-		{0,0,0,0,0,0,0,2,2,0,0,0,0,0,0,0},
+		{0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0},
 		{1,1,1,1,1,1,0,0,0,0,1,1,1,1,1,1},
 		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},
 		{0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0},

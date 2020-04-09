@@ -1,17 +1,19 @@
 #include "GameScreenManager.h"
 #include "GameScreen.h"
 #include "GameScreenLevel.h"
+#include "GameScreenLevel2.h"
 
 GameScreenManager::GameScreenManager(SDL_Renderer* renderer, SCREENS startScreen)
 {
 	mRenderer = renderer;
-	mCurrentScreen = NULL;
 	ChangeScreen(startScreen);
 }
 
 GameScreenManager::~GameScreenManager()
 {
 	mRenderer = NULL;
+	delete mCurrentScreen;
+	mCurrentScreen = NULL;
 }
 
 void GameScreenManager::Render()
@@ -23,6 +25,12 @@ void GameScreenManager::Update(float deltaTime, SDL_Event e)
 {
 
 	mCurrentScreen->Update(deltaTime, e);
+
+	if (mCurrentScreen->GetScreenToChange() != SCREEN_INTRO) 
+	{
+		ChangeScreen(mCurrentScreen->GetScreenToChange());
+	}
+	
 }
 
 void GameScreenManager::ChangeScreen(SCREENS newScreen)
@@ -33,8 +41,7 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 		delete mCurrentScreen;
 	}
 	
-	GameScreenLevel* tempScreen;
-
+	//change the screen 
 	switch (newScreen)
 	{
 	case SCREEN_INTRO:
@@ -42,11 +49,20 @@ void GameScreenManager::ChangeScreen(SCREENS newScreen)
 	case SCREEN_MENU:
 		break;
 	case SCREEN_LEVEL1:
-		tempScreen = new GameScreenLevel(mRenderer);
-		mCurrentScreen = (GameScreen*)tempScreen;
-		tempScreen = NULL;
+		GameScreenLevel* level1;
+		level1 = new GameScreenLevel(mRenderer);
+		mCurrentScreen = (GameScreen*)level1;
+		level1 = NULL;
+		delete level1;
+		std::cout << "level 1 loading..." << std::endl;
 		break;
 	case SCREEN_LEVEL2:
+		GameScreenLevel2* level2;
+		level2 = new GameScreenLevel2(mRenderer);
+		mCurrentScreen = (GameScreen*)level2;
+		level2 = NULL;
+		delete level2;
+		std::cout << "level 2 loading..." << std::endl;
 		break;
 	case SCREEN_GAMEOVER:
 		break;

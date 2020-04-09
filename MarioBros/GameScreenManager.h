@@ -18,4 +18,5 @@ public:
 private:
 	SDL_Renderer* mRenderer;
 	GameScreen* mCurrentScreen;
+
 };

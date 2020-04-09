@@ -18,11 +18,9 @@ struct Rect2D
 {
 	float x;
 	float y;
-
-
-
 	int width;
 	int height;
+
 	Rect2D(float initialX = 0.0f, float initialY = 0.0f, int initialWidth = 0.0f, int initialHeight = 0.0f) {
 		x = initialX;
 		y = initialY;
@@ -38,7 +36,6 @@ enum SCREENS {
 	SCREEN_LEVEL2,
 	SCREEN_GAMEOVER,
 	SCREEN_HIGHSCORES
-
 };
 
 enum FACING
@@ -46,3 +43,5 @@ enum FACING
 	FACING_LEFT = 0,
 	FACING_RIGHT
 };
+
+

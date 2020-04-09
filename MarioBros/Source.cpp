@@ -14,8 +14,6 @@ using namespace::std;
 
 SDL_Window* gWindow = NULL;
 SDL_Renderer* gRenderer = NULL;
-//Texture2D* gTexture = NULL;
-SDL_Texture* LoadTextureFromFile(const std::string& path);
 GameScreenManager* gameScreenManager;
 Uint32 gOldTime;
 
@@ -23,10 +21,6 @@ bool InitSDL();
 void CloseSDL();
 bool Update();
 void Render();
-void LoadMusic(std::string path);
-void FreeTexture();
-
-int flip = 10;
 
 int main(int argc, char* args[])
 {
@@ -152,6 +146,7 @@ bool Update()
 
 		
 	}
+
 	gameScreenManager->Update((float)(newTime - gOldTime) / 1000.0f, e);
 	gOldTime = newTime;
 
@@ -164,7 +159,7 @@ void Render()
 	SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0x00);
 	SDL_RenderClear(gRenderer);
 
-	////Set where to render the image
+	//Set where to render the image
 	gameScreenManager->Render();
 
 	//update screen

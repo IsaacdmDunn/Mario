@@ -169,7 +169,7 @@ void Character::Jump()
 {
 
 	mCanJump = false;
-	if (!mJumping)
+	if (!mJumping && mOnFloor == true)
 	{
 
 		Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Jump.wav");

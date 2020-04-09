@@ -13,11 +13,11 @@ public:
 	void Update(float deltaTime, SDL_Event e) override;
 	void Render() override;
 	void MarioDeath();
+	bool mMarioDead = false;
 
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
-	bool mMarioDead = false;
 	int mCurrentFrame;
 	float mFrameDelay;
 

@@ -14,11 +14,12 @@ public:
 	void Render() override;
 	void LuigiDeath();
 
+	bool mLuigiDead = false;
+
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
 
-	bool mLuigiDead = false;
 	int mCurrentFrame;
 	float mFrameDelay;
 };
