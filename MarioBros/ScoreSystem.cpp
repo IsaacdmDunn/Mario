@@ -1,5 +1,7 @@
+//libraies
 #include "ScoreSystem.h"
 
+//constructor
 ScoreSystem::ScoreSystem()
 {
 	mScore = 0;

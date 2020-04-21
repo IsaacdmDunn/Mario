@@ -1,3 +1,4 @@
+//libraries
 #include "Character.h"
 #include "Texture2D.h"
 #include "Constants.h"
@@ -6,18 +7,14 @@
 //constructor
 Character::Character(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map)
 {
-
-	mCollisionRadius = 15.0f;
 	mCurrentLevelMap = map;
-	mFacingDirection = FACING_RIGHT;
-
-	//mFacingDirection = FACING_RIGHT;
 	mRenderer = renderer;
 	mPosition = startPosition;
-	//SetPosition(startPosition);
 	mTexture = new Texture2D(mRenderer);
 	mTexture->LoadTextureFromFile(imagePath);
 
+	mCollisionRadius = 15.0f;
+	mFacingDirection = FACING_RIGHT;
 	mMusicSystem = new SoundManager();
 }
 
@@ -27,6 +24,7 @@ Character::~Character()
 	mRenderer = NULL;
 }
 
+//renders the character each frame
 void Character::Render()
 {
 	//render character to face a direction
@@ -44,8 +42,6 @@ void Character::Render()
 //update characters
 void Character::Update(float deltaTime, SDL_Event e)
 {
-
-
 	//sets previous position of character
 	float newXPos = GetPosition().x;
 	float newYPos = GetPosition().y;
@@ -60,6 +56,7 @@ void Character::Update(float deltaTime, SDL_Event e)
 		//reduces jump force
 		mJumpForce -= JUMP_FORCE_DECREMENT * deltaTime;
 
+		//if jump force is 0 then character is no longer jumping
 		if (mJumpForce <= 0.0f) {
 			mJumping = false;
 		}
@@ -81,15 +78,12 @@ void Character::Update(float deltaTime, SDL_Event e)
 	}
 
 	CheckCollisions(newXPos, newYPos, deltaTime);
-
-	
-
-
 }
 
+//checks collisions
 void Character::CheckCollisions(float newXPos, float newYPos, float deltaTime)
 {
-	//finds tiles around player
+	//finds tiles around character
 	int leftTile = newXPos / TILE_WIDTH;
 	int rightTile = (newXPos + (mTexture->GetWidth() / mNumberOfFrames)) / TILE_WIDTH;
 	int topTile = newYPos / TILE_HEIGHT;
@@ -158,6 +152,7 @@ void Character::AddGravity(float deltaTime)
 
 }
 
+//gets collision box returning the character's values
 Rect2D Character::GetCollisionBox()
 {
 	return Rect2D(mPosition.x, mPosition.y, (mTexture->GetWidth()/mNumberOfFrames), mTexture->GetHeight());
@@ -167,16 +162,18 @@ Rect2D Character::GetCollisionBox()
 //sets jumping force when player jumps
 void Character::Jump()
 {
-
+	//disallows the character from jumping
 	mCanJump = false;
+	//if character is not jumping and is on the ground
 	if (!mJumping && mOnFloor == true)
 	{
-
+		//play jump sound
 		Mix_Chunk* mSound = mMusicSystem->LoadSoundEffect("Audio/Jump.wav");
 		mMusicSystem->PlaySoundEffect(mSound);
+
+		//make character jump
 		mJumpForce = JUMP_FORCE_INITIAL;
 		mJumping = true;
-
 	}
 }
 

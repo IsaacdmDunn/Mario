@@ -1,11 +1,12 @@
+//libraries
 #include "CharacterLuigi.h"
 #include "Texture2D.h"
 #include "Constants.h"
 
+//constructer
 CharacterLuigi::CharacterLuigi(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map) : Character(renderer, imagePath, startPosition, map)
 {
 	mPosition = startPosition;
-
 	imagePath = "Images/LuigiWalk.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
@@ -13,17 +14,25 @@ CharacterLuigi::CharacterLuigi(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
+
+	//gets sprite dimensions by dividing texture width by number of frames
 	mNumberOfFrames = 8;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
 
+//destructor
 CharacterLuigi::~CharacterLuigi()
 {
+	mRenderer = NULL;
+	delete mTexture;
+	mTexture = NULL;
 }
 
+//updates luigi
 void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 {
+	//if moving then cycle through walk animation
 	if (mMovingLeft == true || mMovingRight == true)
 	{
 		mFrameDelay -= deltaTime;
@@ -50,7 +59,7 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 		mCurrentFrame = 0;
 	}
 
-	//player controls
+	//key released
 	switch (e.type) {
 	case SDL_KEYUP:
 		switch (e.key.keysym.sym)
@@ -71,7 +80,8 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 
 	default:
 		break;
-
+	
+		//key pressed
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym)
 		{
@@ -90,7 +100,7 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 		}
 	}
 
-	//update if mario is not dead else change to dead animation and drop off the screen
+	//update if luigi is not dead else change to dead animation and drop off the screen
 	if (mLuigiDead == false)
 	{
 		Character::Update(deltaTime, e);
@@ -112,12 +122,11 @@ void CharacterLuigi::Update(float deltaTime, SDL_Event e)
 	}
 }
 
+//renders luigi using sprite
 void CharacterLuigi::Render()
 {
 	int left = mSingleSpriteWidth * mCurrentFrame;
-
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
 	//render character to face a direction
@@ -131,6 +140,8 @@ void CharacterLuigi::Render()
 	}
 }
 
+
+//kills luigi
 void CharacterLuigi::LuigiDeath()
 {
 	if (!mJumping)

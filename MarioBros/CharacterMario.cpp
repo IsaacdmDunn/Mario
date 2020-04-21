@@ -1,3 +1,4 @@
+//libraries
 #include "CharacterMario.h"
 #include "Texture2D.h"
 #include "Constants.h"
@@ -6,7 +7,6 @@
 CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map) : Character(renderer, imagePath, startPosition, map)
 {
 	mPosition = startPosition;
-
 	imagePath = "Images/MarioWalk.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
@@ -14,10 +14,11 @@ CharacterMario::CharacterMario(SDL_Renderer* renderer, std::string imagePath, Ve
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
+
+	//gets sprite dimensions by dividing texture width by number of frames
 	mNumberOfFrames = 8;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
-	mCollisionRadius = 16;
 }
 
 //destructer
@@ -25,9 +26,10 @@ CharacterMario::~CharacterMario()
 {
 }
 
-//update
+//updates mario
 void CharacterMario::Update(float deltaTime, SDL_Event e)
 {
+	//if moving then cycle through walk animation
 	if (mMovingLeft == true || mMovingRight == true)
 	{
 		mFrameDelay -= deltaTime;
@@ -43,6 +45,7 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			}
 		}
 	}
+
 	//if player jumps use jumping animation else if player is no longer jumping reset player position
 	if (mJumping == true && mOnFloor == true)
 	{
@@ -53,7 +56,7 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 		mCurrentFrame = 0;
 	}
 
-	//player controls
+	//key released
 	switch (e.type) {
 	case SDL_KEYUP:
 		switch (e.key.keysym.sym)
@@ -64,15 +67,18 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			mMovingRight = false;
 			mXVelocity = 0;
 			mCurrentFrame = 0;
+			break;
 		case SDLK_a:
 			mMovingLeft = false;
 			mXVelocity = 0;
 			mCurrentFrame = 0;
+			break;
 		}
 
 	default:
 		break;
 
+		//key pressed
 	case SDL_KEYDOWN:
 		switch (e.key.keysym.sym)
 		{
@@ -90,7 +96,7 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 			break;
 		}
 	}
-	
+
 	//update if mario is not dead else change to dead animation and drop off the screen
 	if (mMarioDead == false)
 	{
@@ -113,12 +119,11 @@ void CharacterMario::Update(float deltaTime, SDL_Event e)
 	}
 }
 
+//renders mario using sprite
 void CharacterMario::Render()
 {
 	int left = mSingleSpriteWidth * mCurrentFrame;
-
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
 	//render character to face a direction
@@ -132,6 +137,7 @@ void CharacterMario::Render()
 	}
 }
 
+//kills mario
 void CharacterMario::MarioDeath()
 {
 	if (!mJumping)

@@ -1,5 +1,6 @@
 #pragma once
 
+//libraries
 #include <SDL.h>
 #include <vector>
 #include "GameScreen.h"
@@ -12,6 +13,7 @@
 #include "CharacterKoopa.h"
 #include "CharacterCoin.h"
 #include "ScoreSystem.h"
+#include "LivesSystem.h"
 #include "SoundManager.h"
 
 class Texture2D;
@@ -22,7 +24,6 @@ class GameScreenLevel2 : GameScreen
 public:
 	GameScreenLevel2(SDL_Renderer* renderer);
 	~GameScreenLevel2();
-
 	void Render();
 	void Update(float deltaTime, SDL_Event e);
 	void UpdatePOWBlock();
@@ -31,10 +32,14 @@ public:
 	void UpdateCoins(float deltaTime, SDL_Event e);
 	void CreateKoopa(Vector2D position, FACING direction, float speed);
 	void CreateCoins(Vector2D position);
+	void UpdateLives();
+
 private:
 	Texture2D* mBackgroundTexture;
-	CharacterLuigi* Luigi;
-	CharacterMario* Mario;
+	Texture2D* mLives[LIVES_LEFT];
+	int mLivesIconYPos[LIVES_LEFT];
+	CharacterLuigi* mLuigi;
+	CharacterMario* mMario;
 
 	CharacterKoopa* mCharacterKoopa;
 	CharacterCoin* mCharacterCoin;
@@ -44,6 +49,7 @@ private:
 	int coinIndexToDelete;
 
 	ScoreSystem* mScoreSystem;
+	LivesSystem* mLivesSystem;
 	SoundManager* mMusicSystem;
 
 	bool SetUpLevel();
@@ -55,6 +61,4 @@ private:
 	float mScreenShakeTime;
 	float mWobble;
 	float mBackgroundYPos;
-
-	float mEnemyRespawnTime;
 };

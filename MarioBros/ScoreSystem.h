@@ -6,7 +6,6 @@ public:
 	ScoreSystem();
 	~ScoreSystem();
 	int mScore;
-	int mHighScore;
 	void Update();
 private:
 };

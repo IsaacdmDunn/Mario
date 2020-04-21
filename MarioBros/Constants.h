@@ -28,3 +28,6 @@
 
 //coin definitions
 #define ANIMATION_DELAY				0.15f
+
+//player lives
+#define LIVES_LEFT					3

@@ -1,6 +1,7 @@
 #ifndef _TEXTURE_2D_H
 #define _TEXTURE_2D_H
 
+//libraries
 #include <SDL.h>
 #include <string>
 #include <Vector>
@@ -16,17 +17,14 @@ public:
 	void Free();
 	void Render(Vector2D newPosition, SDL_RendererFlip flip, double angle = 0.0f);
 	void Render(SDL_Rect srcRect, SDL_Rect destRect, SDL_RendererFlip flip, double angle = 0.0f);
-
 	int GetWidth() { return mWidth; }
 	int GetHeight() { return mHeight; }
 
 private:
-
 	SDL_Renderer* mRenderer;
 	SDL_Texture* mTexture;
 	int mWidth;
 	int mHeight;
 };
-
 
 #endif _TEXTURE_2D_H

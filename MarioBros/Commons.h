@@ -1,6 +1,6 @@
 #pragma once
 
-
+//struct for a 2D vector using x, y values
 struct Vector2D
 {
 	float x;
@@ -10,10 +10,9 @@ struct Vector2D
 		x = initialX;
 		y = initialY;
 	}
-
-
 };
 
+//struct for a 2D Rect using x, y, height, width
 struct Rect2D
 {
 	float x;
@@ -29,15 +28,16 @@ struct Rect2D
 	}
 };
 
+//enum for the different screens in the game
 enum SCREENS {
-	SCREEN_INTRO = 0,
-	SCREEN_MENU,
+	SCREEN_NULL = 0,
+	SCREEN_INTRO,
 	SCREEN_LEVEL1,
 	SCREEN_LEVEL2,
 	SCREEN_GAMEOVER,
-	SCREEN_HIGHSCORES
 };
 
+//enum for the different ways a character can face
 enum FACING
 {
 	FACING_LEFT = 0,

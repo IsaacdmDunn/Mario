@@ -1,10 +1,12 @@
+//libraries
 #include "SoundManager.h"
 
+//constructor
 SoundManager::SoundManager()
 {
-
 }
 
+//destructor
 SoundManager::~SoundManager()
 {
 	//deletes the music from memory
@@ -14,52 +16,52 @@ SoundManager::~SoundManager()
 	mSound = NULL;
 }
 
+//loads music
 void SoundManager::LoadMusic(std::string filePath)
 {
-	//Loads the music into memory
 	mMusic = Mix_LoadMUS(filePath.c_str());
 	if (!mMusic) {
 		printf("Failed to load music! SDL_mixer Error: %s\n", Mix_GetError());
 	}
 }
 
+//plays music
 void SoundManager::PlayMusic(int numOfLoops)
 {
-	//Plays the music
 	Mix_PlayMusic(mMusic, numOfLoops);
 }
 
+//stops music
 void SoundManager::StopMusic()
 {
-	//Stops the music
 	Mix_HaltMusic();
 }
 
+//pauses music
 void SoundManager::PauseMusic()
 {
-	//Pauses music
 	Mix_PauseMusic();
 }
 
+//resumes
 void SoundManager::ResumeMusic()
 {
-	//Resumes music
 	Mix_ResumeMusic();
 }
 
+//load sound effect
 Mix_Chunk* SoundManager::LoadSoundEffect(std::string filePath)
 {
-	//Loads the sound
 	mSound = Mix_LoadWAV(filePath.c_str());
-	if (!mSound) { //if mSound is equal to null
+	if (!mSound) 
+	{
 		printf("Could not load %s\nMix Error: %s", filePath.c_str(), Mix_GetError()); //output error
 	}
-	//return mSound
 	return mSound;
 }
 
+//play sound effect
 void SoundManager::PlaySoundEffect(Mix_Chunk* sound)
 {
-	//plays the sound that is passed and does not loop
 	Mix_PlayChannel(-1, sound, 0);
 }

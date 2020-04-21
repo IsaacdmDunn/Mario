@@ -1,11 +1,10 @@
+//libraries
 #include "CharacterCoin.h"
 
 //constructor
-CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map, float movementSpeed) : Character(renderer, imagePath, startPosition, map)
+CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vector2D startPosition, LevelMap* map) : Character(renderer, imagePath, startPosition, map)
 {
-	mMovementSpeed = movementSpeed;
 	mPosition = startPosition;
-
 	imagePath = "Images/Coin.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
@@ -13,6 +12,8 @@ CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vect
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
+
+	//gets sprite dimensions by dividing texture width by number of frames
 	mSingleSpriteWidth = mTexture->GetWidth() / 3;
 	mSingleSpriteHeight = mTexture->GetHeight();
 }
@@ -20,11 +21,15 @@ CharacterCoin::CharacterCoin(SDL_Renderer* renderer, std::string imagePath, Vect
 //destructor
 CharacterCoin::~CharacterCoin()
 {
+	mRenderer = NULL;
+	delete mTexture;
+	mTexture = NULL;
 }
 
 //update coin
 void CharacterCoin::Update(float deltaTime, SDL_Event e)
 {
+	//cycles through coin spin animation
 	mFrameDelay -= deltaTime;
 	if (mFrameDelay <= 0.0f)
 	{
@@ -39,18 +44,16 @@ void CharacterCoin::Update(float deltaTime, SDL_Event e)
 	}
 }
 
-//render coin
+//render coin using sprite
 void CharacterCoin::Render()
 {
 	int left = mSingleSpriteWidth * mCurrentFrame;
-
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
-	
 	mTexture->Render(portionOfSpriteSheet, destRect, SDL_FLIP_NONE);
 }
 
+//gets collision box 
 Rect2D CharacterCoin::GetCollisionBox()
 {
 	return Rect2D(mPosition.x, mPosition.y, mSingleSpriteWidth, mTexture->GetHeight());

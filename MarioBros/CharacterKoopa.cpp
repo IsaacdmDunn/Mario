@@ -1,3 +1,4 @@
+//libraries
 #include "CharacterKoopa.h"
 
 //constructor
@@ -6,21 +7,22 @@ CharacterKoopa::CharacterKoopa(SDL_Renderer* renderer, std::string imagePath, Ve
 	mFacingDirection = startFacing;
 	mMovementSpeed = movementSpeed;
 	mPosition = startPosition;
-
-	mInjured = false;
-	isAlive = true;
-
-	//imagePath = "Images/KoopaWalk.png";
 	mTexture = new Texture2D(renderer);
 	if (!mTexture->LoadTextureFromFile(imagePath.c_str()))
 	{
 		std::cout << "Failed to load texture" << imagePath << std::endl;
 		return;
 	}
+
+	//sets up values
+	mInjured = false;
+	isAlive = true;
+	mCollisionRadius = 16;
+
+	//gets sprite dimensions by dividing texture width by number of frames
 	mNumberOfFrames = 9;
 	mSingleSpriteWidth = mTexture->GetWidth() / mNumberOfFrames;
 	mSingleSpriteHeight = mTexture->GetHeight();
-	mCollisionRadius = 16;
 }
 
 //destructor
@@ -34,9 +36,10 @@ CharacterKoopa::~CharacterKoopa()
 //update koopa
 void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 {
-	//mInjured = true;
+	//if koopa is not injured
 	if (!mInjured)
 	{
+		//cycles through koopa walk animation
 		mFrameDelay -= deltaTime;
 		if (mFrameDelay <= 0.0f)
 		{
@@ -49,6 +52,8 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 				mCurrentFrame = 0;
 			}
 		}
+
+		//moves koopa in a direction
 		if (mFacingDirection == FACING_LEFT)
 		{
 			mMovingLeft = true;
@@ -62,6 +67,7 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 			mPosition.x -= KOOPA_SPEED;
 		}
 	}
+	//if koopa is injured set to injured sprite and stop movement until timer is set off
 	else
 	{
 		mCurrentFrame = 8;
@@ -69,15 +75,16 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 		mMovingRight = false;
 
 		mInjuredTime -= deltaTime;
-
 		if(mInjuredTime <= 0.0) 
 		{
 			FlipRightWayUp();
 		}
 	}
 
+	//update character and collisions
 	Character::Update(deltaTime, e);
 
+	//if koopa hits left or right side of screen then make koopa walk the other direction
 	if (mPosition.x < 0)
 	{
 		mFacingDirection = FACING_LEFT;
@@ -91,17 +98,12 @@ void CharacterKoopa::Update(float deltaTime, SDL_Event e)
 
 }
 
-//render koopa
+//render koopa using sprite
 void CharacterKoopa::Render()
 {
-	if (mInjured)
-	{
-		int left = 0.0f;
-	}
+	
 	int left = mSingleSpriteWidth * mCurrentFrame;
-
 	SDL_Rect portionOfSpriteSheet = { left, 0, mSingleSpriteWidth, mSingleSpriteHeight };
-
 	SDL_Rect destRect = { (int)(mPosition.x), (int)(mPosition.y), mSingleSpriteWidth, mSingleSpriteHeight };
 
 	//render character to face a direction
@@ -132,12 +134,13 @@ void CharacterKoopa::Jump()
 	mCanJump = false;
 }
 
+//sets whether koopa alive state
 void CharacterKoopa::SetAlive(bool mIsInjured)
 {
 	mInjured = mIsInjured;
 }
 
-//flip koopa image
+//flip koopa image back up and turns movement back on
 void CharacterKoopa::FlipRightWayUp()
 {
 	mCurrentFrame = 0;
@@ -145,5 +148,4 @@ void CharacterKoopa::FlipRightWayUp()
 	mInjured = false;
 	mMovingLeft = true;
 	mMovingRight = true;
-	//Jump();
 }

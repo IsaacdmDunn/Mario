@@ -1,5 +1,6 @@
 #pragma once
 
+//libraries
 #include <iostream>
 #include "Commons.h"
 #include <SDL.h>
@@ -33,29 +34,23 @@ protected:
 	Vector2D mPosition;
 	Texture2D* mTexture;
 	SoundManager* mMusicSystem;
-
-
 	FACING mFacingDirection;
 	bool mMovingLeft;
 	bool mMovingRight;
 	bool mCanJump;
 	float mJumpForce;
 	int currentYPos;
-
-	float mXVelocity;
+	float mXVelocity; 
+	float mCollisionRadius;
+	int mNumberOfFrames;
+	bool mOnFloor;
+	int mSingleSpriteWidth;
+	int mSingleSpriteHeight;
+	Mix_Chunk* mSound;
 
 	void AddGravity(float deltaTime);
 	void CheckCollisions(float newXPos, float newYPos, float deltaTime);
 	void Jump();
-
-	float mCollisionRadius;
-	int mNumberOfFrames;
-	bool mOnFloor;
-
-	int mSingleSpriteWidth;
-	int mSingleSpriteHeight;
-
-	Mix_Chunk* mSound;
 
 private:
 	LevelMap* mCurrentLevelMap;

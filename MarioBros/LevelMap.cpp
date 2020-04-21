@@ -1,5 +1,7 @@
+//libraries
 #include "LevelMap.h"
 
+//constructor
 LevelMap::LevelMap(int map[MAP_HEIGHT][MAP_WIDTH])
 {
 	//allocate memory for the level tile map
@@ -19,6 +21,7 @@ LevelMap::LevelMap(int map[MAP_HEIGHT][MAP_WIDTH])
 	}
 }
 
+//destructor
 LevelMap::~LevelMap()
 {
 	for (unsigned int i = 0; i < MAP_HEIGHT; i++)
@@ -28,6 +31,7 @@ LevelMap::~LevelMap()
 	delete[] mMap;
 }
 
+//gets a tile at a position on the screen
 int LevelMap::GetTileAt(unsigned int h, unsigned int w)
 {
 	if (h < MAP_HEIGHT && w < MAP_WIDTH)
@@ -37,13 +41,10 @@ int LevelMap::GetTileAt(unsigned int h, unsigned int w)
 	return 0;
 }
 
+//changes a tile value at a point in the screen
 void LevelMap::ChangeTileAt(unsigned int row, unsigned int column, unsigned int newValue)
 {
-	//LevelMap[row][column] = newValue;
 	if (row < MAP_HEIGHT && column < MAP_WIDTH) {
 		mMap[row][column] = newValue;
 	}
-
-
-
 }

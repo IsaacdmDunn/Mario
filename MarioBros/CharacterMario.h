@@ -1,8 +1,7 @@
 #pragma once
 
+//libraries
 #include "Character.h"
-
-//class Texture2D;
 
 class CharacterMario : public Character
 {

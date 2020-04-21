@@ -1,8 +1,7 @@
 #pragma once
 
+//libraries
 #include "Character.h"
-
-//class Texture2D;
 
 class CharacterLuigi : public Character
 {
@@ -19,7 +18,6 @@ public:
 private:
 	float mSingleSpriteWidth;
 	float mSingleSpriteHeight;
-
 	int mCurrentFrame;
 	float mFrameDelay;
 };
